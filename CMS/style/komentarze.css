@@ -1,0 +1,57 @@
+#komentarze{
+    width:calc(100% - 500px);
+    margin:auto;
+    list-style-image: url("account.png");
+    display:block;
+}
+#komentarze>li{
+    width:80%;
+    height:auto;
+    border-right:none;
+    margin:auto;
+    padding-top:40px;
+}
+#Komentarztytul{
+    float:left;
+    padding-left:50px;
+    font-size: 5vmin;
+    font-weight: lighter;
+    color:black;
+
+}
+#komunikat{
+    font-size: 3vmin;
+    margin-top:40px;
+    
+}
+.coment{
+    font-size:15px;
+    text-align:left;
+}
+#komd{
+    
+    text-align: center;
+}
+#strzalka{
+    border:none;
+   background-color:transparent;
+   outline:none;
+   display:inline-block;
+}
+#kphoto{
+    margin:0;
+    padding:0;
+}
+
+#usrform{
+    text-align:center;
+    display:inline-block;
+    margin:10px;
+}
+.cwarning{
+    font-size: 15px;
+    color:black;
+    font-family:'Quicksand';
+    text-align: center;
+    margin-bottom: 20px;
+}

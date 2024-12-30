@@ -1,0 +1,30 @@
+.galeria {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #ace1f4;
+  }
+  
+  /* Każdy tooltip to 20% szerokości ekranu minus gap. 
+     W praktyce ~ 5 kafelków w rzędzie, 
+     jeśli się nie zmieszczą, to i tak "wrap" przeniesie je do nowej linii. */
+  .tooltip {
+    flex: 0 1 20vw; 
+    box-sizing: border-box;
+    text-align: center;
+    background: linear-gradient(to right, #ace1f4, #f0d8a8);
+    box-shadow: 0 0 15px 10px #ace1f4;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  /* Obrazek wypełnia "tooltip" */
+  .glowne {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover; 
+  }
+  

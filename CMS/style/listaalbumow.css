@@ -1,0 +1,22 @@
+#listaalbumow{
+    width:calc(100% - 250px);
+    margin:auto;
+    list-style-image: url("images.png");
+    display:block;
+}
+#listaalbumow>li{
+    width:50%;
+    height:50px;
+    border-right:none;
+    margin:auto;
+    
+    
+}
+#listaalbumow>li>a{
+    display:inline-block;
+    width:auto;
+    margin:auto;
+}
+#listaalbumow>li>a:hover{
+    color:aqua;
+}

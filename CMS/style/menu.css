@@ -1,0 +1,448 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Pacifico&display=swap');
+
+/* Resetowanie marginesów i ogólne box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===================== TELEFONY < 480px ===================== */
+@media all and (max-width: 480px) {
+
+  body {
+    font-size: 16px;
+    /* cokolwiek innego potrzebujesz dla telefonów */
+  }
+
+  .przerwa {
+    height: 60px;
+    background-image: url("../photo/tlo.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+  }
+  .link {
+    text-decoration: none;
+  }
+
+  #title {
+    font-family: 'Audiowide';
+    font-size: 6vmin;
+    line-height: 60px;
+    color: aliceblue;
+    text-align: center;
+  }
+
+  /* Hamburger - stylujemy go i pokazujemy na telefonach */
+  .hamburger {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 35px;
+    height: 25px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 200;
+  }
+  
+  /* Kreski hamburgera */
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #333;
+    border-radius: 2px;
+    transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  /* Ustawienia pozycji transform-origin */
+  .hamburger span:first-child {
+    transform-origin: 0% 0%;
+  }
+  
+  .hamburger span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+  }
+  
+  /* Efekt kliknięcia - zmiana na krzyżyk */
+  .hamburger.menu-open span:first-child {
+    transform: rotate(45deg) translate(0px, 0px);
+  }
+  
+  .hamburger.menu-open span:nth-last-child(2) {
+    transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  
+  .hamburger.menu-open span:nth-last-child(1) {
+    opacity: 0; /* Środkowa kreska znika */
+  }
+  
+  /***********************************************
+   * Menu wysuwane (Twoje obecne style)
+   ***********************************************/
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    max-width: 400px;
+    height: 100vh;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    padding-top: 100px;
+    z-index: 100;
+  }
+  
+  /* Menu widoczne */
+  .nav.menu-open {
+    transform: translateX(0);
+  }
+  
+  .nav ol {
+    list-style-type: none;
+    text-align: right;
+  }
+  
+  .nav ol li {
+    border: none;
+    width: auto;
+    margin: 10px 20px;
+  }
+  
+  .nav ol li a {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* ===================== TABLETY 481px - 768px ===================== */
+@media all and (min-width: 481px) and (max-width: 859px) {
+
+  body {
+    font-size: 17px;
+  }
+
+  .przerwa {
+    height: 80px;
+    background-image: url("../photo/tlo.jpg");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.7;
+  }
+
+  #title {
+    font-family: 'Audiowide';
+    font-size: 28px;
+    line-height: 80px;
+    color: aliceblue;
+    text-align: center;
+  }
+
+  /* Hamburger - stylujemy i pokazujemy na tabletach */
+  .hamburger {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 35px;
+    height: 25px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 200;
+  }
+  
+  /* Kreski hamburgera */
+  .hamburger span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #333;
+    border-radius: 2px;
+    transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
+  }
+  
+  /* Ustawienia pozycji transform-origin */
+  .hamburger span:first-child {
+    transform-origin: 0% 0%;
+  }
+  
+  .hamburger span:nth-last-child(2) {
+    transform-origin: 0% 100%;
+  }
+  
+  /* Efekt kliknięcia - zmiana na krzyżyk */
+  .hamburger.menu-open span:first-child {
+    transform: rotate(45deg) translate(0px, 0px);
+  }
+  
+  .hamburger.menu-open span:nth-last-child(2) {
+    transform: rotate(-45deg) translate(-10px, 10px);
+  }
+  
+  .hamburger.menu-open span:nth-last-child(1) {
+    opacity: 0; /* Środkowa kreska znika */
+  }
+  
+  /***********************************************
+   * Menu wysuwane (Twoje obecne style)
+   ***********************************************/
+  .nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50%;
+    max-width: 400px;
+    height: 100vh;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4));
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    padding-top: 100px;
+    z-index: 100;
+  }
+  
+  /* Menu widoczne */
+  .nav.menu-open {
+    transform: translateX(0);
+  }
+  
+  .nav ol {
+    list-style-type: none;
+    text-align: right;
+  }
+  
+  .nav ol li {
+    border: none;
+    width: auto;
+    margin: 10px 20px;
+  }
+  
+  .nav ol li a {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  .link {
+    text-decoration: none;
+  }
+}
+
+/* ===================== MAŁE LAPTOPY 769px - 1279px ===================== */
+@media all and (min-width: 860px) and (max-width: 1279px) {
+
+  /* Wyłączamy hamburgera na szerokich ekranach */
+  .hamburger {
+    display: none;
+  }
+
+  .nav {
+    position: static;
+    width: 100%;
+    padding: 10px 0;
+    background-color: blanchedalmond;
+    text-align: center;
+    border-top: 1px solid burlywood;
+    border-bottom: 1px solid burlywood;
+    z-index: 100;
+    transform: translateX(0); /* upewniamy się, że jest widoczny */
+  }
+  /* Podmenu w li#konto */
+.nav li ul {
+    display: none;       /* <-- ukrywamy */
+    position: absolute;  /* zwykle w menu rozwijanym */
+    margin: 0;
+    padding: 0;
+    background-color: blanchedalmond; /* albo inny kolor */
+    list-style: none;
+    /* jeżeli menu rozjeżdża się, można ustawić np. width: 150px; */
+    z-index: 999;        /* by nie chowało się za inne elementy */
+  }
+  .nav li:hover ul {
+    display: block;
+  }
+    
+  .przerwa {
+    height: 100px;
+    width: 100%;
+    background-image: url("../photo/tlo.jpg");
+    background-size: 100%;
+    background-position: center;
+    opacity: 0.7;
+  }
+
+  #title {
+    font-family: 'Audiowide';
+    font-size: 43px; 
+    line-height: 100px;
+    color: aliceblue;
+    text-align: center;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 16px; /* pomniejszamy font */
+    height: 35px;
+    display: inline-block;
+  }
+
+  /* Zmniejszamy szerokość li, by zmieściły się w jednej linii */
+  ol > li {
+    float: left;
+    line-height: 100%;
+    width: 120px; /* było 150px, teraz mniej */
+    height: 40px;
+    border-right: 1px dashed rosybrown;
+  }
+
+  ol li a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    align-content: center;
+    width: 120px;
+    height: 40px;
+    position: relative;
+    vertical-align: middle;
+  }
+
+  .link {
+    width: 120px;
+    height: 40px;
+    position: relative;
+    border-left: 1px dashed rosybrown;
+    text-decoration: none;
+  }
+
+  ul {
+    background-color: blanchedalmond;
+  }
+
+  ol > li > ul > li > a {
+    border-top: 1px dashed rosybrown;
+  }
+}
+
+/* ===================== DUŻE EKRANY 1280px+ ===================== */
+/* Tu wstawiamy Twój dotychczasowy kod (przepisany z min-width:1210px na min-width:1280px). */
+@media all and (min-width: 1280px) {
+
+  .nav {
+    width: 100%;
+    padding: 10px 0;
+    background-color: blanchedalmond;
+    text-align: center ;
+    border-top: 1px solid burlywood;
+    border-bottom: 1px solid burlywood;
+    z-index: 100;
+  }
+  .nav li ul {
+    display: none;       /* <-- ukrywamy */
+    position: absolute;  /* zwykle w menu rozwijanym */
+    margin: 0;
+    padding: 0;
+    background-color: blanchedalmond; /* albo inny kolor */
+    list-style: none;
+    /* jeżeli menu rozjeżdża się, można ustawić np. width: 150px; */
+    z-index: 999;        /* by nie chowało się za inne elementy */
+  }
+  .nav li:hover ul {
+    display: block;
+  }
+  body {
+    margin: 0;
+  }
+
+  .przerwa {
+    height: 100px;
+    width: 100%;
+    background-image: url("../photo/tlo.jpg");
+    background-size: 100%;
+    background-position: center;
+    opacity: 70%;
+  }
+
+  .sticky {
+    width: 100%;
+    position: fixed;
+    margin-bottom: 10px;
+    left: 0;
+    top: 0;
+    z-index: 100;
+  }
+
+  .stickyb {
+    margin-top: 59px;
+  }
+
+  ol {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 18px;
+    height: 35px;
+    display: inline-block;
+  }
+
+  ol > li > ul > li > a {
+    border-top: 1px dashed rosybrown;
+  }
+
+  ul {
+    background-color: blanchedalmond;
+  }
+
+  ol > li {
+    float: left;
+    line-height: 100%;
+    width: 150px;
+    height: 40px;
+    border-right: 1px dashed rosybrown;
+  }
+
+  ol a {
+    color: black;
+    text-decoration: none;
+    display: block;
+    line-height: 100%;
+    width: 150px;
+    height: 40px;
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  #panel {
+    line-height: 100%;
+  }
+
+  .link {
+    width: 150px;
+    height: 40px;
+    position: relative;
+    border-left: 1px dashed rosybrown;
+    text-decoration: none;
+  }
+
+  #title {
+    font-family: 'Audiowide';
+    font-size: 43px;
+    line-height: 200%;
+    color: aliceblue;
+    text-align: center;
+  }
+}
+ol{
+    font-family: QuickSand;
+    font-weight: 600;
+}

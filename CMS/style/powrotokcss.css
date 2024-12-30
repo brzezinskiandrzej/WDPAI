@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+	#sukces,#sukceslink{
+	text-align: left;
+	display:block;
+	font-family: Quicksand;
+	font-size: 25px;
+	margin:5px;
+	}
+    #sukceslink2{
+        text-align: right;
+        display:block;
+        font-family: Quicksand;
+        font-size: 3vmin;
+        margin:5px; 
+    }
+    #sukceslink3{
+        text-align: left;
+        display:block;
+        font-family: Quicksand;
+        font-size: 3vmin;
+        margin:5px; 
+    }
+    #szczaly{
+        display:inline-block;
+        width:100%;
+    }
+    #wprawo{
+        float:right;
+        border:none;
+   background-color:transparent;
+   outline:none;
+   margin-right:5vmin;
+   max-width: 80px;
+   width: 30%;
+    }
+    #wlewo{
+        float:left;
+        border:none;
+   background-color:transparent;
+   max-width: 80px;
+   width: 30%;
+   outline:none;
+   margin-left:5vmin;
+    }
+    #wlewos{
+        
+    }
+	

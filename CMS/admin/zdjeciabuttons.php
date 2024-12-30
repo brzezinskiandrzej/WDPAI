@@ -1,0 +1,10 @@
+<?php
+if(isset($_POST['nie']))
+{
+    header('Location:index.php?type=zdjecia&co=tylko');
+}
+if(isset($_POST['tak']))
+{
+    header('Location:index.php?type=zdjecia&co=wszystko');
+}
+?>

@@ -1,0 +1,69 @@
+#sortowanie {
+    margin: auto;
+    border-style: hidden;
+    background: radial-gradient(#f0d8a8 5%, #ace1f4 90%);
+    border-collapse: collapse;
+    font-family: 'Quicksand'; 
+  }
+  
+  /* Komórki w tabeli */
+  #sortowanie td {
+    border-right: 1px solid black;
+    padding: 10px 15px;     /* zwiększamy minimalnie padding */
+    text-align: center;     /* wyśrodkuj tekst w komórce */
+    white-space: nowrap;    /* zapobiega łamaniu również na desktopie */
+    font-size: 1rem;        /* wyjściowa wielkość czcionki dla desktop */
+  }
+  
+  /* Usuń border w ostatniej kolumnie (opcjonalnie) */
+  #sortowanie td:last-child {
+    border-right: none;
+  }
+  
+  /* Linki sortujące */
+  .sorttype {
+    color: black;
+    text-decoration: none;
+  }
+  
+  .sorttype:hover {
+    color: darkorange;
+  }
+  
+  /* Dla paragrafów wewnątrz komórek (opcje sortowania) 
+     usuwamy górne/dolne marginesy, by nie przesuwały tekstu */
+  #sortowanie td p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+  }
+  
+  /* ---------- RESPONSYWNOŚĆ DLA EKRANÓW DO 768px ---------- */
+  @media (max-width: 768px) {
+  
+    /* Zmniejszamy font, by zmieścić więcej w wąskim ekranie:
+       clamp(min, preferowany, max). Np. od 0.7rem do 1rem,
+       z wartością "pośrednią" zależną od szerokości okna (vw).
+       Możesz to dostosować w zależności od efektu. */
+    #sortowanie td {
+      font-size: clamp(0.4rem, 2vw, 0.7rem);
+      padding: 8px 10px; /* trochę mniejszy padding, jeśli chcesz */
+    }
+  
+    /* Cała tabela może mieć overflow-x: auto, by pojawił się
+       pasek przewijania w poziomie, gdyby nawet clamp() było za duże. */
+    #sortowanie {
+      width: 100%;
+      overflow-x: auto;
+      display: block; /* aby overflow-x: auto mogło działać */
+    }
+  
+    /* Możesz też ustawić display flex w <tbody> i <tr>, 
+       by mieć jeden wiersz 'na sztywno'. */
+    #sortowanie tbody,
+    #sortowanie tr {
+      display: flex;
+      flex-wrap: nowrap;   /* nie pozwalamy na zawijanie w kolejny wiersz */
+      justify-content: center;
+    }
+  }

@@ -1,0 +1,133 @@
+.tooltip {
+    position:relative;
+    display: inline-block;
+    
+    margin:20px;
+    margin-right: 100px;
+    
+    
+  }
+  .tooltip p{
+    font-family: QuickSand;
+  }
+  img{
+   margin:10px;
+   margin-bottom:0; 
+  }
+  .glowne{
+    margin-bottom:10px;
+  }
+  body{
+   
+    text-align:center;
+  }
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    
+    background-color: transparent;
+    color: black;
+    text-align: center;
+    border-radius: 20px;
+    padding: 5px 0;
+    margin-left: 3px;
+    width:100%;
+    left:0px;
+    /* Position the tooltip */
+    position:absolute;
+    display:inline-block;
+    z-index: 1;
+  }
+  .atitle:hover .tooltiptext{
+    visibility: visible;
+  }
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    
+  }
+  input[type=button]{
+      text-align: center;
+      background:radial-gradient(blanchedalmond 10%,transparent 70%);
+      border-style: none;
+      width:100px;
+      height:30px;
+      margin-right:5px;
+      border-radius: 50%;
+  }
+  #usun{
+    text-align: center;
+    background:radial-gradient(blanchedalmond 10%,transparent 70%);
+    border-style: none;
+    width:100px;
+    height:30px;
+    border-radius: 50%;
+  }
+  #zmien{
+    text-align: center;
+    background:radial-gradient(blanchedalmond 10%,transparent 70%);
+    border-style: none;
+    max-width:100px;
+    margin-right:5px;
+    border-radius: 50%;
+    
+  }
+  .ntytul{
+      display:none;
+  }
+  .zmien{
+    display:none;
+    text-align: center;
+    background:radial-gradient(blanchedalmond 10%,transparent 70%);
+    border-style: none;
+    width:100px;
+    height:30px;
+    
+    border-radius: 50%;
+  }
+  .zmiana{
+    text-align: center;
+    margin-top:30px;
+  }
+  input{
+    margin:auto;
+  }
+  button{
+    text-align: center;
+      background:radial-gradient(blanchedalmond 10%,transparent 70%);
+      border-style: none;
+      width:100px;
+      height:30px;
+      margin-right:5px;
+      border-radius: 50%;
+  }
+  @media (max-width: 768px) {
+    .tooltip {
+      margin: 10px; /* Zmniejszone odstępy */
+      max-width: 200px; /* Mniejszy maksymalny rozmiar albumu */
+    }
+  
+    .tooltip img {
+      width: 100%; /* Wciąż responsywnie dopasowuje się do kontenera */
+      height: auto; /* Zachowuje proporcje */
+    }
+  
+    .tooltip .tooltiptext {
+      font-size: 12px; /* Mniejszy rozmiar tekstu w dymku */
+    }
+  }
+  
+  /* Dla ekranów poniżej 480px */
+  @media (max-width: 480px) {
+    .tooltip {
+      margin: 5px; /* Jeszcze mniejsze odstępy */
+      max-width: 150px; /* Dostosowany rozmiar albumu */
+    }
+  
+    .tooltip img {
+      width: 100%; /* Wciąż zajmuje pełną szerokość */
+      height: auto; /* Proporcje zachowane */
+    }
+  
+    .tooltip .tooltiptext {
+      font-size: 10px; /* Dopasowanie tekstu */
+    }
+  }

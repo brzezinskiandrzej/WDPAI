@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css');
+img{
+    width: 100%;
+    padding:5px;
+    margin:10px;
+}
+#zdjecie{
+
+display:inline-block;
+background:linear-gradient(to right,#f0d8a8 ,#ace1f4 );
+margin-top:10px;
+}
+#szczaly img{
+max-width: 80px;
+width:30%;
+}
+#szczalanext{
+    float:right;
+}
+#szczalaprevious{
+    float:left;
+}
+.center{
+    text-align:center;
+}
+body{
+    background-color:#ace1f4;
+}
+p{
+    text-align: center;
+    font-family: Quicksand;
+    font-size: 3vmin;
+}
+span{
+    color:navy;
+    font-weight: bold;
+}
+.rating{
+    transform:translate(0%,0%) rotateY(180deg);
+    display:flex;
+    justify-content: center;
+  align-content: center;
+    
+    
+}
+.rating input{
+     display:none;
+}
+.rating label
+{
+    display:block;
+    cursor:pointer;
+    width:50px;
+   
+
+}
+.rating label:before{
+    content: '★';
+    font-family: fontAwesome;
+    position:relative;
+    display:block;
+    font-size: 9vmin;
+    color:black;
+}
+.rating label:after{
+    content: '★';
+    font-family: fontAwesome;
+    position:absolute;
+    top:0;
+    display:block;
+    font-size: 9vmin;
+    color:gold;
+    opacity:0;
+    transition: .5s;
+    text-shadow: 0 2px 5px rgba(0,0,0,.5);
+}
+.rating label:hover:after,
+.rating label:hover ~ label:after,
+.rating input:checked ~ label:after
+{
+    opacity:1;
+}

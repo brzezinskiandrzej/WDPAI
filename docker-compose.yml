@@ -18,3 +18,23 @@ services:
       dockerfile: docker/php/Dockerfile
     volumes:
       - .:/app/
+  
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+    external: true
+    name: 2325b1d8c4e670dc2a052aad1fb6fc33d91bbc7fd8bbb7d42f02bf6bc2712fc6
+networks:
+  app-network:
+    driver: bridge

@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&family=Quicksand:wght@300;400&display=swap');
+p{
+    
+    font-family:'Quicksand' ;
+    
+}
+#top{
+    text-align:center;
+    font-size: 40px;
+    font-weight:bold;
+   font-family: 'Paytone One';
+   background: -webkit-linear-gradient(30deg,black,#f0d8a8);
+   -webkit-background-clip: text;
+   -webkit-text-fill-color: transparent;
+   text-shadow:10px 10px 150px black;
+    
+}

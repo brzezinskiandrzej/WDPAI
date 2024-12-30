@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+input{
+    border-color:gray;
+    margin-top:10px;
+    max-width:300px;
+    width:60%;
+    height:20px;
+    margin:5px;
+    text-align:center;
+    
+
+}
+#dodajalbum{
+    width:90px;
+    font-family:'Quicksand' ;
+    font-size: 13px;
+    font-weight: bold;
+}
+#main{
+    text-align:center;
+    max-width: 500px;        /* maksymalna szerokość kontenera */
+    width: 90%;
+				background: radial-gradient( #9198e5 1%,transparent 70%);
+				margin:auto;
+				margin-top:20px;
+                padding-top:20px;
+                padding-bottom:20px;
+}
+body{
+    background-image: url(../photo/background.jpg);
+    background-repeat: repeat;
+  background-attachment: fixed;
+  }

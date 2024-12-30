@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
+
+/* ---------------- DOTYCHCZASOWE REGUŁY ---------------- */
+
+#rejestracja {
+  display: none; /* ukryty formularz rejestracji */
+}
+#loguj {
+  display: none;
+  margin: auto;
+}
+#loguj:hover {
+  color: blue;
+}
+#logowanie {
+  display: block; /* pokazany formularz logowania */
+}
+#rejestruj {
+  display: block;
+  margin: auto;
+}
+#rejestruj:hover {
+  color: blue;
+}
+.odstep {
+  margin-bottom: 13px;
+}
+button {
+  border: none;
+  padding-top: 10px;
+  background-color: transparent;
+  font-family: 'Quicksand';
+  font-weight: bold;
+}
+input {
+  border-color: gray;
+  margin-top: 15px;
+  width: 400px;  /* domyślna szerokość na większych ekranach */
+  height: 25px;
+}
+.warnings {
+  font-family: 'Quicksand';
+  font-size: 13px;
+  display: none;
+}
+body {
+  height: 100%;
+  background-color: #ace1f4; /* z Twojego kodu, możesz zostawić jak było */
+}
+#submitsignin, #submitlog {
+  width: 80px;
+  font-family: 'Quicksand';
+  font-size: 13px;
+  font-weight: bold;
+}
+h3 {
+  font-family: 'Quicksand';
+}
+
+/* ---------------- ZMIANY W #logowanko ---------------- */
+#logowanko {
+  /* Zamiast width: calc(100vh), które ograniczało szerokość do wysokości ekranu, 
+     lepiej użyć np. max-width + auto, by było responsywne. */
+  max-width: 500px;        /* maksymalna szerokość kontenera */
+  width: 90%;              /* węższe ekrany - płynna szerokość */
+  background: radial-gradient(#9198e5 1%, #ace1f4 70%);
+  margin: 20px auto;       /* wyśrodkuj na stronie i dodaj odstęp u góry/dół */
+  text-align: center;
+  padding: 20px;           /* wewnętrzny odstęp, żeby formularze nie „kleiły się” */
+  box-sizing: border-box;  /* by padding nie rozpychał całego boxa */
+}
+
+/* ---------------- MEDIA QUERY dla węższych ekranów ---------------- */
+@media (max-width: 600px) {
+  /* Zmniejsz szerokość inputów z 400px do ~80% */
+  input {
+    width: 80%;
+    max-width: 400px; /* na wypadek, gdy ekran jest jeszcze szerszy */
+  }
+  /* Ewentualnie można trochę zmniejszyć padding */
+  #logowanko {
+    padding: 15px;
+  }
+}

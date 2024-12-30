@@ -1,0 +1,36 @@
+/*#footer{
+    background-color: bisque;
+    width:100%;
+    height:50px;
+    text-align:center;
+    vertical-align:middle ;
+    margin-top:-50px;
+    position:relative;
+    clear:both;
+    line-height: 50px;
+}
+*/
+html,body{
+    height:100%;
+}
+#container{
+    min-height:100%;
+}
+#main{
+    padding-bottom: 50px;
+    overflow:auto;
+}
+#footer{
+    background-color: bisque;
+    position: relative;
+    height: 50px;
+    /*margin-top:-50px;*/
+    
+    clear:both;
+    line-height: 50px;
+    text-align:center;
+}
+*{
+    margin:0;
+    padding:0;
+}
