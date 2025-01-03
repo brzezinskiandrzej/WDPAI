@@ -137,6 +137,56 @@ class UserRepository
             return false;
         }
     }
+    public function getUsersByRole(string $role): array
+    {
+        $sql = "SELECT id, login, uprawnienia, aktywny 
+                FROM uzytkownicy
+                WHERE uprawnienia=$1
+                ORDER BY uprawnienia";
+        $result = pg_query_params($this->conn, $sql, [$role]);
+
+        $users = [];
+        while ($row = pg_fetch_assoc($result)) {
+            $users[] = $row;
+        }
+        return $users;
+    }
+
+    public function getAdminsExceptMe(?int $myId): array
+    {
+        if (!$myId) {
+            $myId = 0; // w razie braku
+        }
+        $sql = "SELECT id, login, uprawnienia, aktywny
+                FROM uzytkownicy
+                WHERE uprawnienia='administrator' AND id!=$1
+                ORDER BY uprawnienia";
+        $result = pg_query_params($this->conn, $sql, [$myId]);
+
+        $users = [];
+        while ($row = pg_fetch_assoc($result)) {
+            $users[] = $row;
+        }
+        return $users;
+    }
+
+    public function getAllExcept(?int $myId): array
+    {
+        if (!$myId) {
+            $myId = 0;
+        }
+        $sql = "SELECT id, login, uprawnienia, aktywny
+                FROM uzytkownicy
+                WHERE id!=$1
+                ORDER BY uprawnienia";
+        $result = pg_query_params($this->conn, $sql, [$myId]);
+
+        $users = [];
+        while ($row = pg_fetch_assoc($result)) {
+            $users[] = $row;
+        }
+        return $users;
+    }
 
     
 }

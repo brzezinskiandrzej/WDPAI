@@ -118,4 +118,12 @@ class AlbumService
 
         return ['success' => true];
     }
+    public function countAllAlbumsForAdmin(): int
+    {
+        return $this->albumRepository->countAllAlbumsForAdmin();
+    }
+    public function getAlbumsForAdmin(int $offset, int $limit): array
+    {
+        return $this->albumRepository->findAlbumsForAdmin($offset, $limit);
+    }
 }

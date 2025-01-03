@@ -180,15 +180,16 @@ a:hover{
     font-size: 30px;
 
 }
+
 #tytulbeztype{
     font-family: 'Quicksand';
     margin-top: 200px;
-    font-size: 50px;
+    font-size: 6vmin;
     text-align: center;
 }
 .wybierz{
     font-family: 'Quicksand';
-    font-size: 25px;
+    font-size: 4vmin;
     text-align: center;
     margin-top:100px;
 }
@@ -197,9 +198,9 @@ a:hover{
     font-size: 20px;
     margin-left: 50px;
     margin-top: 10px;
-    display: inline;
+    max-width: 900px;
     position:relative;
-    top:8px;
+    /*top:8px;*/
    
 }
 .listelement2{
@@ -219,12 +220,13 @@ a:hover{
     float:left;
     padding-left: 100px;
     text-align: left;
+    display: ruby;
     
 }
 .zmiana2{
    display: inline;
     position:relative;
-    top:-10px;
+    /*top:-10px;*/
 }
 .zmiana3
 {
@@ -272,7 +274,6 @@ button{
     background:radial-gradient(blanchedalmond 10%,white 70%);
     border-style: none;
     height:30px;
-    width:130px;
     border-radius: 50%;
     display: inline;
   }
@@ -280,16 +281,16 @@ button{
   #tytullisty{
       text-align: center;
       font-family:'Quicksand';
-      font-size: 40px;
+      font-size: 6vmin;
       margin-bottom: 50px;
   }
   .funkcje{
       text-align: center;
-      margin-right:100px;
+      /*margin-right:100px;*/
       margin-left: 10px;
       display: inline;
       position:relative;
-    top:8px;
+    /*top:8px;*/
   }
   #main{
     overflow-x:hidden;
@@ -333,7 +334,7 @@ button{
  }
  #zaakceptuj{
      display:inline;
-     width:150px;
+     
  }
  .albumlistz{
     width:100%;
@@ -349,6 +350,7 @@ button{
     height: auto;
     justify-content: center;
     float:left;
+    display:ruby;
     padding-left: 100px;
     text-align: left;
     margin-top: 20px;
@@ -413,7 +415,7 @@ button{
     background:radial-gradient(blanchedalmond 10%,white 70%);
     border-style: none;
     height:30px;
-    width:300px;
+    width:150px;
     border-radius: 50%;
     display: inline;
     
@@ -424,3 +426,18 @@ button{
     word-break: break-word;
     
  }
+ @media (max-width: 600px) {
+    #wskazowka{
+        top:30px;
+        left:100px;
+        font-size: 15px;
+    
+    }
+}
+@media (max-width: 1200px) {
+    .listelement{
+        font-size: 15px;
+        max-width: 600px;
+    
+    }
+}

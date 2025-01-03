@@ -216,5 +216,29 @@ class UserService
 
         return ['success' => true];
     }
+    public function getUsersByCo(string $co, ?int $myId): array
+    {
+        // $myId to id aktualnie zalogowanego usera (aby go wykluczyć w co='admin' lub 'wszystko')
+        switch ($co) {
+            case 'zwykly':
+                return $this->userRepository->getUsersByRole('użytkownik');
+
+            case 'mod':
+                return $this->userRepository->getUsersByRole('moderator');
+
+            case 'admin':
+                // w starym kodzie: 
+                //    WHERE uprawnienia='administrator' AND id!=$myId
+                return $this->userRepository->getAdminsExceptMe($myId);
+
+            case 'wszystko':
+                // stary kod: userRepo->getAllUsersExceptMe($myId)
+                return $this->userRepository->getAllExcept($myId);
+
+            default:
+                // Nieznane 'co' – zwracamy pustą tablicę
+                return [];
+        }
+    }
     
 }

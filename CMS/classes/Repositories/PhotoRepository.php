@@ -270,6 +270,66 @@ class PhotoRepository
         }
         return $comments;
     }
+    public function countUnacceptedComments(): int
+    {
+        $sql = "SELECT COUNT(*) as ile FROM zdjecia_komentarze WHERE zaakceptowany=0";
+        $res = pg_query($this->conn, $sql);
+        $row = pg_fetch_assoc($res);
+        return (int)($row['ile'] ?? 0);
+    }
+    public function findAllCommentsOrdered(): array
+    {
+        $sql = "SELECT zdjecia_komentarze.id, zdjecia_komentarze.komentarz,
+                       zdjecia_komentarze.zaakceptowany, zdjecia.opiszdjecia,
+                       uzytkownicy.login
+                FROM zdjecia_komentarze
+                INNER JOIN zdjecia on zdjecia_komentarze.id_zdjecia=zdjecia.id
+                INNER JOIN uzytkownicy on zdjecia_komentarze.id_uzytkownika=uzytkownicy.id
+                ORDER BY zdjecia_komentarze.zaakceptowany";
+        $res = pg_query($this->conn, $sql);
+
+        $comments = [];
+        while ($row = pg_fetch_assoc($res)) {
+            $comments[] = $row;
+        }
+        return $comments;
+    }
+    public function findUnacceptedComments(): array
+    {
+        $sql = "SELECT zdjecia_komentarze.id, zdjecia_komentarze.komentarz,
+                       zdjecia_komentarze.zaakceptowany, zdjecia.opiszdjecia,
+                       uzytkownicy.login
+                FROM zdjecia_komentarze
+                INNER JOIN zdjecia on zdjecia_komentarze.id_zdjecia=zdjecia.id
+                INNER JOIN uzytkownicy on zdjecia_komentarze.id_uzytkownika=uzytkownicy.id
+                WHERE zdjecia_komentarze.zaakceptowany=0";
+        $res = pg_query($this->conn, $sql);
+
+        $comments = [];
+        while ($row = pg_fetch_assoc($res)) {
+            $comments[] = $row;
+        }
+        return $comments;
+    }
+    public function acceptCommentById(int $commentId): void
+    {
+        $sql = "UPDATE zdjecia_komentarze SET zaakceptowany=1 WHERE id=$1";
+        pg_query_params($this->conn, $sql, [$commentId]);
+    }
+    public function updateCommentText(int $commentId, string $newText): void
+    {
+        // prosty escap, ewentualnie param
+        // $newText = pg_escape_string($newText);
+        // lub lepiej pg_query_params
+        $sql = "UPDATE zdjecia_komentarze SET komentarz=$1 WHERE id=$2";
+        pg_query_params($this->conn, $sql, [$newText, $commentId]);
+    }
+    public function deleteCommentById(int $commentId): void
+    {
+        $sql = "DELETE FROM zdjecia_komentarze WHERE id=$1";
+        pg_query_params($this->conn, $sql, [$commentId]);
+    }
+
     /**
      * Dodaje rekord w tabeli 'zdjecia':
      *  - opis (nazwa pliku),
@@ -377,5 +437,83 @@ class PhotoRepository
 
         return null;
     }
+    public function countUnacceptedPhotos(): int
+    {
+        $sql = "SELECT COUNT(*) as ile FROM zdjecia WHERE zaakceptowane=0";
+        $res = pg_query($this->conn, $sql);
+        $row = pg_fetch_assoc($res);
+        return (int)($row['ile'] ?? 0);
+    }
+    public function findPhotosByAlbumAdmin(int $albumId): array
+    {
+        $sql = "SELECT zdjecia.id, zdjecia.opis, zdjecia.opiszdjecia,
+                       zdjecia.zaakceptowane, albumy.tytul, albumy.id as albumid
+                FROM zdjecia
+                INNER JOIN albumy ON zdjecia.id_albumu=albumy.id
+                WHERE albumy.id=$1";
+        $res = pg_query_params($this->conn, $sql, [$albumId]);
+
+        $photos = [];
+        while ($row = pg_fetch_assoc($res)) {
+            $photos[] = $row;
+        }
+        return $photos;
+    }
+    public function findAllAlbumsWithPhotos(): array
+    {
+        $sql = "SELECT albumy.id, albumy.tytul, COUNT(zdjecia.id) as ile
+                FROM albumy
+                INNER JOIN zdjecia ON zdjecia.id_albumu=albumy.id
+                GROUP BY albumy.id";
+        $res = pg_query($this->conn, $sql);
+
+        $albums = [];
+        while ($row = pg_fetch_assoc($res)) {
+            $albums[] = $row;
+        }
+        return $albums;
+    }
+    public function findAllUnacceptedPhotos(): array
+    {
+        $sql = "SELECT zdjecia.id, zdjecia.opis, zdjecia.opiszdjecia,
+                       albumy.tytul, albumy.id as albumid
+                FROM zdjecia
+                INNER JOIN albumy on zdjecia.id_albumu=albumy.id
+                WHERE zdjecia.zaakceptowane=0";
+        $res = pg_query($this->conn, $sql);
+
+        $photos = [];
+        while ($row = pg_fetch_assoc($res)) {
+            $photos[] = $row;
+        }
+        return $photos;
+    }
+    public function acceptPhotoById(int $photoId): void
+    {
+        $sql = "UPDATE zdjecia SET zaakceptowane=1 WHERE id=$1";
+        pg_query_params($this->conn, $sql, [$photoId]);
+    }
+    public function deletePhotoWithRelations(int $photoId, int $albumId, string $filename): void
+    {
+        // usuń komentarze, oceny i zdjęcie
+        $sql2 = "DELETE FROM zdjecia_komentarze
+                 USING zdjecia
+                 WHERE zdjecia_komentarze.id_zdjecia=zdjecia.id AND zdjecia.id=$1";
+        $sql3 = "DELETE FROM zdjecia_oceny
+                 USING zdjecia
+                 WHERE zdjecia_oceny.id_zdjecia=zdjecia.id AND zdjecia.id=$1";
+        $sql4 = "DELETE FROM zdjecia WHERE id=$1";
+
+        pg_query_params($this->conn, $sql2, [$photoId]);
+        pg_query_params($this->conn, $sql3, [$photoId]);
+        pg_query_params($this->conn, $sql4, [$photoId]);
+
+        // usuń pliki
+        $directory  = "../photo/".$albumId."/".$filename;
+        $directory2 = "../photo/".$albumId."/min/".$photoId."-min.jpg";
+        @unlink($directory);
+        @unlink($directory2);
+    }
+
     
 }

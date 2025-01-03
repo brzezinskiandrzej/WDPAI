@@ -102,6 +102,30 @@ class PhotoService
     {
         return $this->photoRepository->findAcceptedCommentsByPhoto($photoId);
     }
+    public function getUnacceptedCountComments(): int
+    {
+        return $this->photoRepository->countUnacceptedComments();
+    }
+    public function getAllCommentsOrdered(): array
+    {
+        return $this->photoRepository->findAllCommentsOrdered();
+    }
+    public function getUnacceptedComments(): array
+    {
+        return $this->photoRepository->findUnacceptedComments();
+    }
+    public function acceptComment(int $commentId): void
+    {
+        $this->photoRepository->acceptCommentById($commentId);
+    }
+    public function editComment(int $commentId, string $newText): void
+    {
+        $this->photoRepository->updateCommentText($commentId, $newText);
+    }
+    public function deleteComment(int $commentId): void
+    {
+        $this->photoRepository->deleteCommentById($commentId);
+    }
     /**
      * Zwraca tablicę:
      *   ['errors' => [...]] w razie błędów
@@ -248,6 +272,36 @@ class PhotoService
     {
         $photo = $this->photoRepository->getPhotoById($photoId);
         return $photo['opis'] ?? null;
+    }
+    public function getUnacceptedCount(): int
+    {
+        return $this->photoRepository->countUnacceptedPhotos();
+    }
+
+    public function getPhotosByAlbumId(int $albumId): array
+    {
+        return $this->photoRepository->findPhotosByAlbumAdmin($albumId);
+    }
+
+    public function getAlbumsHavingPhotos(): array
+    {
+        return $this->photoRepository->findAllAlbumsWithPhotos();
+    }
+
+    public function getUnacceptedPhotos(): array
+    {
+        return $this->photoRepository->findAllUnacceptedPhotos();
+    }
+
+    public function acceptPhoto(int $photoId): void
+    {
+        $this->photoRepository->acceptPhotoById($photoId);
+    }
+
+    public function deletePhotoCompletely(int $photoId, int $albumId, string $filename): void
+    {
+        // usuwa komentarze, oceny, rekord zdjęcia i plik
+        $this->photoRepository->deletePhotoWithRelations($photoId, $albumId, $filename);
     }
     
 }

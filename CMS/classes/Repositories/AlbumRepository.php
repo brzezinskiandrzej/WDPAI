@@ -157,6 +157,47 @@ class AlbumRepository
         $result = pg_query_params($this->conn, $sql, [$albumId]);
         return $result !== false;
     }
+    public function countAllAlbumsForAdmin(): int
+    {
+        // Przenosimy SELECT COUNT(*) as ile FROM (SELECT ...) n
+        // Możemy uprościć, ale by zachować dawną logikę – pozostawiamy:
+        $sql = "SELECT COUNT(*) as ile FROM (
+            SELECT a.id,a.tytul,COUNT(z.opis) as ile,SUM(z.zaakceptowane) as accept
+            FROM albumy as a
+            LEFT JOIN zdjecia as z on z.id_albumu=a.id
+            GROUP BY a.id
+        ) n";
+        $res = pg_query($this->conn, $sql);
+        $row = pg_fetch_assoc($res);
+        return (int)($row['ile'] ?? 0);
+    }
+
+    public function findAlbumsForAdmin(int $offset, int $limit): array
+    {
+        // Główne zapytanie do listy albumów
+        // SELECT a.id, a.tytul, a.data, COUNT(z.opis) as ile, ...
+        // ORDER BY niezaakceptowane DESC, a.id
+        $sql = "
+           SELECT a.id, a.tytul, a.data,
+                  COUNT(z.opis) as ile,
+                  SUM(z.zaakceptowane) as accept,
+                  u.login,
+                  (COUNT(z.opis) - SUM(z.zaakceptowane)) as niezaakceptowane
+           FROM albumy as a
+           LEFT JOIN zdjecia as z ON z.id_albumu = a.id
+           INNER JOIN uzytkownicy as u ON u.id = a.id_uzytkownika
+           GROUP BY a.id, a.tytul, a.data, u.login
+           ORDER BY niezaakceptowane DESC, a.id
+           LIMIT $limit OFFSET $offset
+        ";
+        $res = pg_query($this->conn, $sql);
+
+        $albums = [];
+        while ($row = pg_fetch_assoc($res)) {
+            $albums[] = $row;
+        }
+        return $albums;
+    }
     
     
 }

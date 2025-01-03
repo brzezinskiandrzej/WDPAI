@@ -2,3 +2,51 @@
     position:relative;
     padding-bottom:50px; 
 }
+/* Paginacja */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    justify-content: center; /* Wyśrodkuj paginację */
+    margin-top: 20px; /* Odstęp od treści */
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+    background-color: #e9ecef;
+}
+
+.pagination .active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+    cursor: default;
+}
+
+.pagination .disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
+
+/* Responsywność */
+@media (max-width: 576px) {
+    .pagination .page-link {
+        padding: 6px 8px;
+        font-size: 14px;
+    }
+}
