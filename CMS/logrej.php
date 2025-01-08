@@ -1,5 +1,5 @@
 <?php
-// logrej.php – front controller dla logowania/rejestracji
+
 
 require_once __DIR__ . '/classes/Database/DatabaseConnection.php';
 require_once __DIR__ . '/classes/Repositories/UserRepository.php';
@@ -10,7 +10,7 @@ use App\Controllers\LogRegController;
 
 $controller = new LogRegController();
 
-// Sprawdzamy, jaką akcję user wykonuje: 
+
 $action = $_GET['action'] ?? null;
 
 switch ($action) {
@@ -22,6 +22,6 @@ switch ($action) {
         break;
     default:
         $controller->showForm(); 
-        // wyświetla formularz logowania/rejestracji
+        
         break;
 }

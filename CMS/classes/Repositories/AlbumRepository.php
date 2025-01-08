@@ -13,9 +13,6 @@ class AlbumRepository
         $this->conn = DatabaseConnection::getInstance()->getConnection();
     }
 
-    /**
-     * Zwraca liczbę albumów, w których jest co najmniej 1 zaakceptowane zdjęcie
-     */
     public function countAllWithAcceptedPhotos(): int
     {
         $sql = <<<SQL
@@ -35,9 +32,6 @@ class AlbumRepository
         return (int) $row['ile'];
     }
 
-    /**
-     * Pobiera albumy z co najmniej jednym zaakceptowanym zdjęciem – z uwzględnieniem paginacji, sortowania itd.
-     */
     public function findAlbumsWithAcceptedPhotos(
         string $sortBy,
         string $sortType,
@@ -49,11 +43,7 @@ class AlbumRepository
             $sortBy = 'tytul';
         }
         $sortType = strtoupper($sortType) === 'DESC' ? 'DESC' : '';
-    
-        // Poniżej w subzapytaniu:
-        // - Szukamy pierwszego zdjęcia zaakceptowanego w danym albumie 
-        //   wg ustalonego kryterium (np. najstarsze – ORDER BY z2.data ASC).
-        // - Możesz zmienić ORDER BY np. na DESC, jeśli chcesz ostatnio dodane zdjęcie.
+
         $sql = <<<SQL
             SELECT a.id, 
                    a.tytul, 
@@ -85,10 +75,7 @@ class AlbumRepository
         }
         return $albums;
     }
-    /**
-     * Wstawia nowy album do bazy.
-     * Zwraca ID nowo utworzonego albumu lub null w razie błędu.
-     */
+
     public function createAlbum(int $userId, string $title): ?int
     {
         $date = date('Y-m-d H:i:s');
@@ -120,7 +107,7 @@ class AlbumRepository
         if ($result) {
             while ($row = pg_fetch_assoc($result)) {
                 $albums[] = $row; 
-                // row['id'], row['tytul'], row['data'], row['id_uzytkownika'], itd.
+
             }
         }
         return $albums;
@@ -159,8 +146,6 @@ class AlbumRepository
     }
     public function countAllAlbumsForAdmin(): int
     {
-        // Przenosimy SELECT COUNT(*) as ile FROM (SELECT ...) n
-        // Możemy uprościć, ale by zachować dawną logikę – pozostawiamy:
         $sql = "SELECT COUNT(*) as ile FROM (
             SELECT a.id,a.tytul,COUNT(z.opis) as ile,SUM(z.zaakceptowane) as accept
             FROM albumy as a
@@ -174,9 +159,6 @@ class AlbumRepository
 
     public function findAlbumsForAdmin(int $offset, int $limit): array
     {
-        // Główne zapytanie do listy albumów
-        // SELECT a.id, a.tytul, a.data, COUNT(z.opis) as ile, ...
-        // ORDER BY niezaakceptowane DESC, a.id
         $sql = "
            SELECT a.id, a.tytul, a.data,
                   COUNT(z.opis) as ile,
@@ -197,6 +179,59 @@ class AlbumRepository
             $albums[] = $row;
         }
         return $albums;
+    }
+    public function deleteAlbumCompletely(int $albumId): void
+    {
+        
+        pg_query($this->conn, "BEGIN");
+
+
+        $sql2 = "
+            DELETE FROM zdjecia_komentarze
+            WHERE id_zdjecia IN (
+                SELECT id FROM zdjecia WHERE id_albumu = $1
+            )
+        ";
+        $result2 = pg_query_params($this->conn, $sql2, [$albumId]);
+        if (!$result2) {
+            pg_query($this->conn, "ROLLBACK");
+            throw new \Exception("Błąd podczas usuwania komentarzy.");
+        }
+
+        
+        $sql3 = "
+            DELETE FROM zdjecia_oceny
+            WHERE id_zdjecia IN (
+                SELECT id FROM zdjecia WHERE id_albumu = $1
+            )
+        ";
+        $result3 = pg_query_params($this->conn, $sql3, [$albumId]);
+        if (!$result3) {
+            pg_query($this->conn, "ROLLBACK");
+            throw new \Exception("Błąd podczas usuwania ocen.");
+        }
+
+       
+        $sql4 = "DELETE FROM zdjecia WHERE id_albumu = $1";
+        $result4 = pg_query_params($this->conn, $sql4, [$albumId]);
+        if (!$result4) {
+            pg_query($this->conn, "ROLLBACK");
+            throw new \Exception("Błąd podczas usuwania zdjęć.");
+        }
+
+        
+        $sql = "DELETE FROM albumy WHERE id = $1";
+        $result = pg_query_params($this->conn, $sql, [$albumId]);
+        if (!$result) {
+            pg_query($this->conn, "ROLLBACK");
+            throw new \Exception("Błąd podczas usuwania albumu.");
+        }
+
+        
+        $commit = pg_query($this->conn, "COMMIT");
+        if (!$commit) {
+            throw new \Exception("Błąd podczas zatwierdzania transakcji.");
+        }
     }
     
     

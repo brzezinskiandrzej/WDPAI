@@ -1,4 +1,3 @@
-<!-- admin/views/adminIndexView.php -->
 
 <?php
 session_start();
@@ -15,12 +14,12 @@ $role = $_SESSION['tablica'][5] ?? '';
 <div id="container">
 <div id="main">
 
-<!-- Tytuł, ewentualne wskazówki -->
+
 <p id="wskazowka"> <- Menu</p>
 <p id="tytulbeztype">PANEL ADMINISTRACYJNY</p>
 <p class="wybierz"> Wybierz czynność z menu</p>
 
-<!-- Menu identyczne jak w starym index.php -->
+
 <div id="menutoogle">
     <input type="checkbox">
     <span></span>
@@ -35,11 +34,11 @@ $role = $_SESSION['tablica'][5] ?? '';
     </ul>
 </div>
 
-<!-- Ewentualne skrypty js -->
+
 <script src="../javascript/jquery-3.6.0.min.js"></script>
 <script src="../javascript/include/footer.js"></script>
 
-<!-- Skrypt adminmenucheck (logika ukrywania linków w zależności od uprawnień) -->
+
 <script type="text/javascript">
 <?php if ($role=='administrator'): ?>
 document.getElementById("albumy").style.display="block";

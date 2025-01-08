@@ -11,12 +11,10 @@ class DatabaseConnection
 
     private function __construct()
     {
-        // Nawiązanie połączenia z PostgreSQL
         $conn = pg_connect("host=db dbname=postgres user=postgres password=root");
         if (!$conn) {
             throw new Exception("Błąd połączenia z bazą danych: " . pg_last_error());
         }
-        // Ustawienie kodowania znaków
         pg_set_client_encoding($conn, 'UTF8');
         pg_query($conn, "SET search_path TO public");
 

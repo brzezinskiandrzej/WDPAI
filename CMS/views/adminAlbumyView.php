@@ -1,10 +1,6 @@
-<!-- admin/views/adminAlbumyView.php -->
+
 <?php
-// Ten widok jest wywoływany przez AdminAlbumController->showAlbumy()
-// Zakładamy, że mamy zmienne:
-//  - $albums (tablica albumów z polami: id, tytul, data, ile, accept, login, niezaakceptowane...)
-//  - $numerstron (liczba stron do paginacji)
-//  - $_SESSION['warning3'] (komunikat)
+
 session_start();
 $role = $_SESSION['tablica'][5] ?? '';
 ?>
@@ -12,13 +8,13 @@ $role = $_SESSION['tablica'][5] ?? '';
 <head>
 <meta charset="utf-8" />
 <link rel="stylesheet" type="text/css" href="../style/adminmenu.css"/>
+<link rel="stylesheet" type="text/css" href="../style/numerystron.css"/>
 </head>
 <body>
 <div id="container">
 <div id="main">
 
 <?php
-// Pokazujemy ewentualny komunikat
 if (!isset($_SESSION['warning3'])) {
     $_SESSION['warning3'] = '';
 }
@@ -28,7 +24,7 @@ if ($_SESSION['warning3'] !== '') {
 }
 ?>
 
-<!-- MENU identyczne jak w dawnym index.php i adminmenucheck -->
+
 <div id="menutoogle">
     <input type="checkbox">
     <span></span>
@@ -46,7 +42,7 @@ if ($_SESSION['warning3'] !== '') {
 <script src="../javascript/jquery-3.6.0.min.js"></script>
 <script src="../javascript/include/footer.js"></script>
 
-<!-- Logika ukrywania / pokazywania linków w zależności od uprawnień -->
+
 <script type="text/javascript">
 <?php if ($role=='administrator'): ?>
 document.getElementById("albumy").style.display="block";
@@ -61,11 +57,11 @@ document.getElementById("users").style.display="none";
 <?php endif; ?>
 </script>
 
-<!-- Tytuł listy albumów -->
+
 <p id="tytullisty">Lista albumów : </p>
 
 <?php
-// Wyświetlamy listę albumów jak w starym adminscript.php
+
 if (!empty($albums)) {
     foreach ($albums as $wynik) {
         $niezaakceptowane = (int)$wynik['niezaakceptowane'];
@@ -103,18 +99,14 @@ if (!empty($albums)) {
     echo '<div class="albumlist"><p class="listelement">Brak albumów</p></div>';
 }
 
-// Paginacja
-if (!empty($numerstron) && $numerstron>1) {
-    echo '<form id="numery" method="get" action="index.php">';
-    echo '<input type="hidden" name="type" value="albumy">';
-    for ($i=1; $i<=$numerstron; $i++) {
-        echo '<button class="paging" type="submit" name="numer" value="'.$i.'">'.$i.'</button>';
-    }
-    echo '</form>';
-}
+
+
 ?>
 
 </div>
+<?php if (!empty($paginationHtml)): ?>
+            <?= $paginationHtml ?>
+        <?php endif; ?>
 </div>
 
 <script>

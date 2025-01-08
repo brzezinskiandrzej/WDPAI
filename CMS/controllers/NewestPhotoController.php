@@ -10,7 +10,7 @@ class NewestPhotoController
     {
         session_start();
 
-        // Ile zdjęć chcemy wyświetlić?
+        
         $limit = 20;
 
         $photoService = new PhotoService();
@@ -18,7 +18,7 @@ class NewestPhotoController
 
         $title = "Najnowsze zdjęcia – Image Space";
 
-        // Ładujemy widok
+        
         require __DIR__ . '/../views/newFotoView.php';
     }
 }

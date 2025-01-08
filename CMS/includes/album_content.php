@@ -3,11 +3,11 @@ require_once 'includes/database/DatabaseInterface.php';
 require_once 'includes/database/PostgresDatabase.php';
 require_once 'includes/repositories/AlbumRepository.php';
 
-// Inicjalizacja bazy danych i repozytorium
+
 $db = new PostgresDatabase();
 $albumRepo = new AlbumRepository($db);
 
-// Pobierz albumy użytkownika
+
 $userId = $_SESSION['tablica']['user_id'];
 $albums = $albumRepo->getAlbumsByUserId($userId);
 

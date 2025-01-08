@@ -1,19 +1,16 @@
-<!-- admin/views/adminKomentarzeView.php -->
+
 
 <?php
 session_start();
 $role = $_SESSION['tablica'][5] ?? '';
 $co = $_GET['co'] ?? null;
 
-// Komunikat
+
 if (!isset($_SESSION['warning3'])) {
     $_SESSION['warning3'] = '';
 }
 
-// W starym kodzie mieliśmy param co=tylko/wszystko/null => 
-// - co=null => lubdiv z guzikami 
-// - co=wszystko => pętla po $comments (zaakceptowane i nie)
-// - co=tylko => pętla po $comments (niezaakceptowane)
+
 
 ?>
 <!DOCTYPE html>
@@ -43,7 +40,7 @@ if (!isset($_SESSION['warning3'])) {
 <script src="../javascript/jquery-3.6.0.min.js"></script>
 <script src="../javascript/include/footer.js"></script>
 
-<!-- adminmenucheck -->
+
 <script type="text/javascript">
 <?php if ($role=='administrator'): ?>
 document.getElementById("albumy").style.display="block";
@@ -62,12 +59,12 @@ document.getElementById("users").style.display="none";
 <?php unset($_SESSION['warning3']); ?>
 
 <?php
-// param $comments – kontroler przekazał listę komentarzy (lub pustą)
+
 if (!isset($comments)) {
     $comments = []; 
 }
 
-// co=null => pokazywaliśmy lubdiv do "tylko niezaakceptowane" / "wszystko"
+
 if (!$co) {
     echo '<div class="lubdiv">
             <form method="post" action="kombuttons.php">
@@ -76,7 +73,7 @@ if (!$co) {
             </form>
           </div>';
 } else {
-    // co=wszystko lub co=tylko => pętla po $comments
+    
     echo '<div id="listazdjec">';
     $i=0;
     foreach ($comments as $wynik) {
@@ -86,11 +83,11 @@ if (!$co) {
                   <input type="hidden" name="textareanumber" value="'.$i.'">';
 
         if ($role=='administrator') {
-            // Admin może edytować
+            ć
             echo '<input type="text" class="textarea" name="kom'.$i.'" value="'.htmlspecialchars($wynik['komentarz']).'">
                   <input type="submit" name="zmienkomentarz" id="zmienkomentarz" value="Potwierdź Edycje">';
         } elseif ($role=='moderator') {
-            // Moderator read-only
+            
             if ($wynik['zaakceptowany']=='0') {
                 echo '<input type="text" readonly="readonly" class="textarea" name="kom'.$i.'" value="'.htmlspecialchars($wynik['komentarz']).'">';
             } else {

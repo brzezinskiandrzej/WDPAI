@@ -13,13 +13,6 @@ class PhotoRepository
         $this->conn = DatabaseConnection::getInstance()->getConnection();
     }
 
-    /**
-     * Zwraca tablicę z informacjami o top N zdjęciach 
-     * (ocena, album, autor, plik zdjęcia) posortowanych malejąco wg średniej oceny.
-     *
-     * @param int $limit  – domyślnie 20
-     * @return array      – wiersze z polami: ocena, id_zdjecia, tytul, login, id, opis
-     */
     public function findTopRatedPhotos(int $limit = 20): array
     {
         $sql = <<<SQL
@@ -109,7 +102,7 @@ class PhotoRepository
             LIMIT $1
         SQL;
 
-        // W zapytaniu parametry wstawiamy przez pg_query_params
+
         $result = pg_query_params($this->conn, $sql, [$limit]);
         if (!$result) {
             return [];
@@ -122,9 +115,7 @@ class PhotoRepository
 
         return $photos;
     }
-    /**
-     * Pobiera dane konkretnego zdjęcia wraz z informacjami o albumie i autorze albumu.
-     */
+
     public function findPhotoWithAlbum(int $photoId): ?array
     {
         $sql = <<<SQL
@@ -150,9 +141,7 @@ class PhotoRepository
         return null;
     }
 
-    /**
-     * Dodaje ocenę zdjęcia przez konkretnego użytkownika.
-     */
+
     public function addRating(int $photoId, int $userId, int $rating): bool
     {
         $sql = <<<SQL
@@ -163,9 +152,6 @@ class PhotoRepository
         return (bool) $res;
     }
 
-    /**
-     * Pobiera wszystkie oceny zdjęcia, by policzyć średnią itp.
-     */
     public function findRatingsByPhoto(int $photoId): array
     {
         $sql = <<<SQL
@@ -185,10 +171,6 @@ class PhotoRepository
         return $ratings;
     }
 
-    /**
-     * Znajduje następne zdjęcie (po dacie) w danym albumie, pomijając aktualne.
-     * Używane do przycisku "następne".
-     */
     public function findNextPhotoInAlbum(int $albumId, string $currentPhotoDate, int $currentPhotoId): ?array
     {
         $sql = <<<SQL
@@ -208,14 +190,12 @@ class PhotoRepository
             $currentPhotoId
         ]);
         if ($row = pg_fetch_assoc($result)) {
-            return $row; // np. ['id' => 123]
+            return $row; 
         }
         return null;
     }
 
-    /**
-     * Znajduje poprzednie zdjęcie w danym albumie, pomijając aktualne.
-     */
+
     public function findPrevPhotoInAlbum(int $albumId, string $currentPhotoDate, int $currentPhotoId): ?array
     {
         $sql = <<<SQL
@@ -318,9 +298,6 @@ class PhotoRepository
     }
     public function updateCommentText(int $commentId, string $newText): void
     {
-        // prosty escap, ewentualnie param
-        // $newText = pg_escape_string($newText);
-        // lub lepiej pg_query_params
         $sql = "UPDATE zdjecia_komentarze SET komentarz=$1 WHERE id=$2";
         pg_query_params($this->conn, $sql, [$newText, $commentId]);
     }
@@ -329,16 +306,6 @@ class PhotoRepository
         $sql = "DELETE FROM zdjecia_komentarze WHERE id=$1";
         pg_query_params($this->conn, $sql, [$commentId]);
     }
-
-    /**
-     * Dodaje rekord w tabeli 'zdjecia':
-     *  - opis (nazwa pliku),
-     *  - opiszdjecia (tekst użytkownika),
-     *  - data,
-     *  - zaakceptowane (domyślnie 0, czeka na moderację),
-     *  - id_albumu
-     * Zwraca ID nowo dodanego zdjęcia (lub null w razie błędu).
-     */
     public function createPhoto(
         int $albumId,
         string $filename,
@@ -495,7 +462,6 @@ class PhotoRepository
     }
     public function deletePhotoWithRelations(int $photoId, int $albumId, string $filename): void
     {
-        // usuń komentarze, oceny i zdjęcie
         $sql2 = "DELETE FROM zdjecia_komentarze
                  USING zdjecia
                  WHERE zdjecia_komentarze.id_zdjecia=zdjecia.id AND zdjecia.id=$1";
@@ -508,7 +474,6 @@ class PhotoRepository
         pg_query_params($this->conn, $sql3, [$photoId]);
         pg_query_params($this->conn, $sql4, [$photoId]);
 
-        // usuń pliki
         $directory  = "../photo/".$albumId."/".$filename;
         $directory2 = "../photo/".$albumId."/min/".$photoId."-min.jpg";
         @unlink($directory);

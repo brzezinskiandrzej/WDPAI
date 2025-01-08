@@ -15,7 +15,7 @@
 <div id="container">
     <div id="main">
         <?php
-        // Menu (MenuService)
+        
         include 'javascript/include/menu.php';
         ?>
 
@@ -31,7 +31,7 @@
                     $filename  = $photo['opis'];
                     $albumTit  = $photo['tytul'];
                     $author    = $photo['login'];
-                    $dateAdded = $photo['data']; // data dodania zdjęcia
+                    $dateAdded = $photo['data'];
                 ?>
                 <div class="foto-container">
                     <a href="foto.php?id=<?= $photoId ?>">

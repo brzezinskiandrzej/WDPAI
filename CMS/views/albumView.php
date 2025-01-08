@@ -13,25 +13,25 @@
 <div id="container">
     <div id="main">
 
-        <!-- Wstawiamy menu (korzystające z MenuService) -->
+        
         <?php include 'javascript/include/menu.php'; ?>
 
-        <!-- Ewentualnie link powrotu do strony głównej -->
+        
         <a id="sukceslink" href="index.php">Strona główna</a>
 
-        <!-- Tutaj wyświetlamy zdjęcia z pętli $photos -->
+        
         <?php if (empty($photos)): ?>
             <p>Brak zaakceptowanych zdjęć w tym albumie.</p>
         <?php else: ?>
             <div class="album-gallery" style="text-align: center;">
                 <?php foreach ($photos as $photo): ?>
                     <?php
-                        // $photo zawiera: id, id_albumu, opis, data, zaakceptowane, opiszdjecia
+                        
                         $photoId      = $photo['id'];
-                        $photoFile    = $photo['opis'];        // nazwa pliku
-                        $photoComment = $photo['opiszdjecia']; // opis zdjęcia
+                        $photoFile    = $photo['opis'];        
+                        $photoComment = $photo['opiszdjecia']; 
                     ?>
-                    <!-- Link do szczegółów zdjęcia (foto.php?id=...) -->
+                    
                     <a href="foto.php?id=<?= $photoId ?>&id_albumu=<?= $albumId ?>">
                         <img src="photo/<?= $albumId ?>/<?= $photoFile ?>" height="180" alt="<?= htmlspecialchars($photoComment) ?>">
                     </a>
@@ -39,10 +39,10 @@
             </div>
         <?php endif; ?>
 
-        <!-- Paginacja -->
+        
         <?php if ($pagesCount > 1): ?>
             <form id="numery" method="get" action="album.php">
-                <!-- Zachowujemy id albumu -->
+                
                 <input type="hidden" name="id" value="<?= $albumId ?>">
                 <?php for ($i = 1; $i <= $pagesCount; $i++): ?>
                     <input type="submit" name="numer" value="<?= $i ?>">

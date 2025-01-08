@@ -15,13 +15,13 @@
 <div id="container">
     <div id="main">
         <?php
-        // Wczytujemy menu (już z MenuService)
+        
         include 'javascript/include/menu.php';
         ?>
 
         <p id="top">TOP <?= $limit ?> OF IMAGE SPACE</p>
 
-        <!-- Galeria top zdjęć -->
+        
         <div class="galeria-top" style="text-align: center;">
             <?php if (empty($topPhotos)): ?>
                 <p>Brak zdjęć do wyświetlenia.</p>
@@ -29,8 +29,7 @@
                 <?php 
                 $i = 1;
                 foreach ($topPhotos as $photo):
-                    // Pola z repozytorium:
-                    // ocena, id_zdjecia, tytul, login, album_id, opis
+                    
                     $albumId   = $photo['album_id'];
                     $photoId   = $photo['id_zdjecia'];
                     $titleAlb  = $photo['tytul'];

@@ -13,23 +13,19 @@ class AddAlbumController
         $this->albumService = new AlbumService();
     }
 
-    /**
-     * Wyświetla formularz dodawania albumu.
-     */
+    
     public function showForm(): void
     {
         session_start();
 
-        // Błędy z poprzedniej próby
+        
         $errors = $_SESSION['addAlbumErrors'] ?? [];
         unset($_SESSION['addAlbumErrors']);
 
         require __DIR__ . '/../views/dodajAlbumView.php';
     }
 
-    /**
-     * Obsługa formularza (dodanie albumu).
-     */
+    
     public function store(): void
     {
         session_start();
@@ -39,7 +35,7 @@ class AddAlbumController
             exit;
         }
 
-        $userId = $_SESSION['tablica'][7]; // ID użytkownika
+        $userId = $_SESSION['tablica'][7]; 
         $title  = $_POST['albumname'] ?? '';
 
         $result = $this->albumService->createAlbum($userId, $title);
@@ -49,7 +45,7 @@ class AddAlbumController
             exit;
         }
 
-        // Sukces: przekierowanie do 'dodaj-foto.php?albumid=XYZ'
+       
         $albumId = $result['album_id'];
         header("Location: dodaj-foto.php?albumid=$albumId");
         exit;

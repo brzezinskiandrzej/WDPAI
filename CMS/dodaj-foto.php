@@ -1,5 +1,4 @@
 <?php
-// dodaj-foto.php – front controller do dodawania zdjęcia
 
 require_once __DIR__ . '/classes/Database/DatabaseConnection.php';
 require_once __DIR__ . '/classes/Services/PaginationService.php';

@@ -10,23 +10,23 @@
 </head>
 <body>
 <div id="container">
-  <!-- Załadowanie jQuery (jeśli używasz) -->
+
   <script src="javascript/jquery-3.6.0.min.js"></script>
-  <!-- Twój skrypt JS do walidacji -->
+ 
   <script src="javascript/include/dodaj-fotojs.js"></script>
 
-  <!-- Menu -->
+  
   <?php include 'javascript/include/menu.php'; ?>
 
   <div id="main">
     <?php if (count($albums) > 1 && $albumId === 0): ?>
-      <!-- Użytkownik ma wiele albumów, musi wybrać jeden -->
+      
       <p>Wybierz album, do którego chcesz dodać zdjęcie:</p>
       <div class="album-grid">
         <?php foreach ($albums as $alb): ?>
           <div class="album-item">
             <a href="dodaj-foto.php?albumid=<?= $alb['id'] ?>" class="album-link">
-              <!-- Ikona albumu – zastąp 'folder-icon.png' ścieżką do swojej ikony -->
+              
               <img src="photo/folder.png" alt="Album <?= htmlspecialchars($alb['tytul']) ?>" class="album-icon">
               <div class="album-title"><?= htmlspecialchars($alb['tytul']) ?></div>
             </a>
@@ -34,7 +34,7 @@
         <?php endforeach; ?>
       </div>
     <?php else: ?>
-      <!-- Formularz dodawania zdjęcia -->
+      
       <?php if (!empty($errors)): ?>
         <div class="error-box">
           <?php foreach ($errors as $err): ?>
@@ -65,11 +65,11 @@
 
         <input type="submit" name="dodajzdjecie" id="dodajzdjecie" value="Dodaj Zdjęcie">
 
-        <!-- Ukryty input albumId -->
+        
         <input type="hidden" name="ida" value="<?= htmlspecialchars($albumId) ?>">
       </form>
 
-      <!-- Wyświetlanie istniejących zdjęć w tym albumie -->
+      
       <?php if (!empty($photos)): ?>
         <div id="listazdjec">
           <p>Zdjęcia w albumie:</p>

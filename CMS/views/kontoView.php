@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="style/kontomenu.css"/>
     <link rel="stylesheet" type="text/css" href="style/albumykonto.css"/>
     <title>Konto Użytkownika</title>
-    <!-- JavaScript includes -->
+    
     <script src="javascript/include/kontojs.js"></script>
     <script src="javascript/jquery-3.6.0.min.js"></script>
     <script src="javascript/include/footer.js"></script>
@@ -31,7 +31,7 @@
             </ul>
         </div>
 
-        <!-- Komunikaty o błędach -->
+        
         <?php if (!empty($warning) || !empty($warning2) || !empty($warning3)): ?>
             <div class="error-box">
                 <?php 
@@ -42,14 +42,14 @@
             </div>
         <?php endif; ?>
 
-        <!-- Komunikaty o sukcesie -->
+        
         <?php if (!empty($success)): ?>
             <div class="success-message">
                 <p><?= htmlspecialchars($success) ?></p>
             </div>
         <?php endif; ?>
         
-        <!-- Sekcje konta -->
+       
         <div class="konto-sekcja" id="dane">
         
             <?php if ($type === 'dane'): ?>
@@ -106,14 +106,14 @@
                     <div class="album-grid">
                         <?php foreach ($albums as $album): ?>
                             <div class="tooltip">
-                                <!-- Ikona albumu -->
+                                
                                 <img class="glowne" src="photo/folder.png" height="180" alt="Album <?= htmlspecialchars($album['tytul']) ?>">
                                 
-                                <!-- Tytuł albumu z informacją -->
+                                
                                 <p class="atitle">
                                     <?= htmlspecialchars($album['tytul']) ?>
                                     <?php
-                                        // Upewnienie się, że 'accept' nie jest NULL
+                                       
                                         $accept = isset($album['accept']) ? (int)$album['accept'] : 0;
                                         $ile = isset($album['ile']) ? (int)$album['ile'] : 0;
                                         if ($ile === 0) {
@@ -126,12 +126,12 @@
                                     ?>
                                 </p>
                                 
-                                <!-- Przyciski akcji -->
+                                
                                 <span class="tooltiptext">
                                     <button id="pzmien<?= htmlspecialchars($album['id']) ?>" onclick="pokaz(<?= htmlspecialchars($album['id']) ?>)">Zmień tytuł</button>
                                 </span>
                                 
-                                <!-- Formularz zmiany tytułu albumu -->
+                                
                                 <form class="zmiana" method="post" action="konto.php?type=albumy&action=updateTitle">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($album['id']) ?>">
                                     <span class="tooltiptext">

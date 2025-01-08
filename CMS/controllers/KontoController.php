@@ -19,12 +19,7 @@ class KontoController
         $this->photoService = new PhotoService();
     }
 
-    /**
-     * Obsługuje żądania na podstawie typu i akcji.
-     *
-     * @param string $type
-     * @param string|null $action
-     */
+    
     public function handleRequest(string $type, ?string $action)
     {
         switch ($type) {
@@ -75,34 +70,32 @@ class KontoController
     }
     private function render(string $view, array $data = [])
     {
-        // Ekstrakcja danych do zmiennych
+        
         extract($data);
         require __DIR__ . '/../views/' . $view;
     }
 
-    /**
-     * Wyświetla sekcję "Moje Dane".
-     */
+    
     private function showDane()
     {
         if (!$this->isLoggedIn()) {
             $this->redirectToLogin();
         }
 
-        // Dane użytkownika z sesji
+        
         $user = [
             'login' => $_SESSION['tablica'][1],
             'email' => $_SESSION['tablica'][3],
             'created_at' => $_SESSION['tablica'][4],
         ];
 
-        // Komunikaty
+       
         $warning = $_SESSION['warning'] ?? '';
         $warning2 = $_SESSION['warning2'] ?? '';
-        // Czyszczenie komunikatów
+        
         unset($_SESSION['warning'], $_SESSION['warning2']);
 
-        // Renderowanie widoku
+        
         $this->render('kontoView.php', [
             'type' => 'dane',
             'user' => $user,
@@ -111,9 +104,7 @@ class KontoController
         ]);
     }
 
-    /**
-     * Aktualizuje adres email użytkownika.
-     */
+    
     private function updateEmail()
     {
         if (!$this->isLoggedIn()) {
@@ -134,9 +125,7 @@ class KontoController
         $this->redirectToDane();
     }
 
-    /**
-     * Aktualizuje hasło użytkownika.
-     */
+    
     private function updatePassword()
     {
         if (!$this->isLoggedIn()) {
@@ -158,9 +147,7 @@ class KontoController
         $this->redirectToDane();
     }
 
-    /**
-     * Wyświetla sekcję "Moje Albumy".
-     */
+    
     private function showAlbumy()
     {
         if (!$this->isLoggedIn()) {
@@ -170,13 +157,13 @@ class KontoController
         $userId = $_SESSION['tablica'][7];
         $albums = $this->albumService->getAlbumsByUser($userId);
         
-        // Komunikat
+        
         $warning3 = $_SESSION['warning3'] ?? '';
         
-        // Czyszczenie komunikatu
+        
         unset($_SESSION['warning3']);
 
-        // Renderowanie widoku
+        
         $this->render('kontoView.php', [
             'type' => 'albumy',
             'albums' => $albums,
@@ -184,9 +171,7 @@ class KontoController
         ]);
     }
 
-    /**
-     * Aktualizuje tytuł albumu.
-     */
+    
     private function updateAlbumTitle()
     {
         if (!$this->isLoggedIn()) {
@@ -212,9 +197,7 @@ class KontoController
         $this->redirectToAlbumy();
     }
 
-    /**
-     * Usuwa album użytkownika.
-     */
+    
     private function deleteAlbum()
     {
         if (!$this->isLoggedIn()) {
@@ -228,7 +211,7 @@ class KontoController
             $this->redirectToAlbumy();
         }
 
-        // Usunięcie plików albumu z systemu plików
+        
         $this->deleteAlbumFiles((int)$albumId);
 
         $result = $this->albumService->deleteAlbum((int)$albumId);
@@ -242,9 +225,7 @@ class KontoController
         $this->redirectToAlbumy();
     }
 
-    /**
-     * Wyświetla sekcję "Moje Zdjęcia".
-     */
+    
     private function showZdjecia()
     {
         if (!$this->isLoggedIn()) {
@@ -253,15 +234,15 @@ class KontoController
 
         $userId = $_SESSION['tablica'][7];
         $albums = $this->albumService->getAlbumsByUser($userId);
-        $photos = []; // Będzie wypełnione w zależności od wyboru albumu
+        $photos = []; 
 
-        // Komunikat
+       
         $warning3 = $_SESSION['warning3'] ?? '';
 
-        // Czyszczenie komunikatu
+        
         unset($_SESSION['warning3']);
 
-        // Renderowanie widoku
+        
         $this->render('kontoView.php', [
             'type' => 'zdjecia',
             'albums' => $albums,
@@ -270,11 +251,7 @@ class KontoController
         ]);
     }
 
-    /**
-     * Wyświetla zdjęcia wybranego albumu.
-     *
-     * @param string $albumId
-     */
+    
     private function showPhotos(string $albumId)
     {
         if (!$this->isLoggedIn()) {
@@ -284,13 +261,13 @@ class KontoController
         $albumId = (int)$albumId;
         $photos = $this->photoService->getPhotosByAlbum($albumId);
         error_log('Zdjęcia w albumie: ' . count($photos));
-        // Komunikat
+       
         $warning3 = $_SESSION['warning3'] ?? '';
 
-        // Czyszczenie komunikatu
+       
         unset($_SESSION['warning3']);
 
-        // Renderowanie widoku
+       
         $this->render('kontoView.php', [
             'type' => 'zdjecia',
             'selectedAlbumId' => $albumId,
@@ -300,9 +277,7 @@ class KontoController
         ]);
     }
 
-    /**
-     * Zmienia opis zdjęcia.
-     */
+    
     private function updatePhotoDescription()
     {
         if (!$this->isLoggedIn()) {
@@ -328,9 +303,7 @@ class KontoController
         $this->redirectToZdjecia();
     }
 
-    /**
-     * Usuwa zdjęcie użytkownika.
-     */
+    
     private function deletePhoto()
     {
         if (!$this->isLoggedIn()) {
@@ -344,7 +317,7 @@ class KontoController
             $this->redirectToZdjecia();
         }
 
-        // Usunięcie plików zdjęcia z systemu plików
+       
         $this->deletePhotoFiles((int)$photoId);
 
         $result = $this->photoService->deletePhoto((int)$photoId);
@@ -358,9 +331,7 @@ class KontoController
         $this->redirectToZdjecia();
     }
 
-    /**
-     * Usuwa konto użytkownika.
-     */
+    
     private function deleteAccount()
     {
         if (!$this->isLoggedIn()) {
@@ -369,7 +340,7 @@ class KontoController
 
         $userId = $_SESSION['tablica'][7];
 
-        // Usunięcie wszystkich plików związanych z użytkownikiem
+        
         $this->deleteAllUserFiles($userId);
 
         $result = $this->userService->deleteAccount($userId);
@@ -382,49 +353,35 @@ class KontoController
         }
     }
 
-    /**
-     * Sprawdza, czy użytkownik jest zalogowany.
-     *
-     * @return bool
-     */
+   
     private function isLoggedIn(): bool
     {
         return isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] === true;
     }
 
-    /**
-     * Przekierowuje użytkownika do strony logowania.
-     */
     private function redirectToLogin(): void
     {
         header('Location: logrej.php');
         exit;
     }
 
-    /**
-     * Przekierowuje użytkownika do sekcji "Moje Dane".
-     */
+    
     private function redirectToDane(): void
     {
         header('Location: konto.php?type=dane');
         exit;
     }
 
-    /**
-     * Przekierowuje użytkownika do sekcji "Moje Albumy".
-     */
     private function redirectToAlbumy(): void
     {
         header('Location: konto.php?type=albumy');
         exit;
     }
 
-    /**
-     * Przekierowuje użytkownika do sekcji "Moje Zdjęcia".
-     */
+    
     private function redirectToZdjecia(): void
     {
-        // Sprawdzenie, czy istnieje ID albumu
+        
         if (isset($_POST['idalbumu'])) {
             header('Location: konto.php?type=zdjecia&id=' . intval($_POST['idalbumu']));
         } else {
@@ -433,25 +390,17 @@ class KontoController
         exit;
     }
 
-    /**
-     * Usuwa pliki albumu z systemu plików.
-     *
-     * @param int $albumId
-     */
+    
     private function deleteAlbumFiles(int $albumId): void
     {
         $directory = "photo/" . $albumId;
         $this->deleteAll($directory);
     }
 
-    /**
-     * Usuwa pliki zdjęcia z systemu plików.
-     *
-     * @param int $photoId
-     */
+    
     private function deletePhotoFiles(int $photoId): void
     {
-        // Pobranie ID albumu i nazwy pliku zdjęcia
+       
         $albumId = $this->photoService->getAlbumIdByPhotoId($photoId);
         $filename = $this->photoService->getPhotoFilename($photoId);
 
@@ -461,7 +410,7 @@ class KontoController
                 unlink($filePath);
             }
 
-            // Zakładam, że istnieje folder "min" z miniaturami
+            
             $minFilePath = "photo/" . $albumId . "/min/" . $photoId . "-min.jpg";
             if (file_exists($minFilePath)) {
                 unlink($minFilePath);
@@ -469,14 +418,10 @@ class KontoController
         }
     }
 
-    /**
-     * Usuwa wszystkie pliki użytkownika z systemu plików.
-     *
-     * @param int $userId
-     */
+    
     private function deleteAllUserFiles(int $userId): void
     {
-        // Pobranie wszystkich albumów użytkownika
+        
         $albums = $this->albumService->getAlbumsByUser($userId);
         foreach ($albums as $album) {
             $albumId = $album['id'];
@@ -485,11 +430,7 @@ class KontoController
         }
     }
 
-    /**
-     * Usuwa wszystkie pliki w danym katalogu.
-     *
-     * @param string $dir
-     */
+   
     private function deleteAll(string $dir): void
     {
         if (!is_dir($dir)) {
@@ -505,9 +446,7 @@ class KontoController
         rmdir($dir);
     }
 
-    /**
-     * Wylogowuje użytkownika i przekierowuje do strony logowania.
-     */
+    
     private function logoutAndRedirect(): void
     {
         session_destroy();

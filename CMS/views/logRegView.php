@@ -11,12 +11,12 @@
 <div id="container">
 
     <?php
-    // Wczytaj menu:
+    
     include 'javascript/include/menu.php';
     ?>
 
     <div id="logowanko">
-        <!-- Formularz rejestracji -->
+        
         <form id="rejestracja" method="post" action="logrej.php?action=register">
             <h3>Rejestracja</h3>
             <input type="text" name="login"    id="login"    required placeholder="Wpisz Login"><br>
@@ -33,7 +33,7 @@
 
             <input type="submit" name="sumbitsignin" id="submitsignin" value="Zarejestruj"><br>
             
-            <!-- Wyświetlanie błędów rejestracji (z $errorsRegister) -->
+            
             <?php if (!empty($errorsRegister)): ?>
                 <div class="error-box">
                 <?php foreach ($errorsRegister as $err): ?>
@@ -43,7 +43,7 @@
             <?php endif; ?>
         </form>
 
-        <!-- Formularz logowania -->
+        
         <form id="logowanie" method="post" action="logrej.php?action=login">
             <h3>Logowanie</h3>
             <div class="odstep">
@@ -56,7 +56,7 @@
             </div>
             <input type="submit" name="formlog" id="submitlog" value="Zaloguj">
 
-            <!-- Wyświetlanie błędów logowania (z $errorsLogin) -->
+            
             <?php if (!empty($errorsLogin)): ?>
                 <div class="error-box">
                 <?php foreach ($errorsLogin as $err): ?>
@@ -66,7 +66,7 @@
             <?php endif; ?>
         </form>
 
-        <!-- Przycisk do przełączania się JS-em -->
+        
         <button id="rejestruj"  onclick="myFunction()">Załóż konto</button>
         <button id="loguj"      onclick="myFunction2()">Zaloguj się</button>
     </div>

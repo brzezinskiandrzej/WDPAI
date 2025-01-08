@@ -25,7 +25,7 @@ if (!isset($_SESSION['warning3'])) {
 <div id="container">
 <div id="main">
 
-<!-- Górne menu -->
+
 <div id="menutoogle">
     <input type="checkbox">
     <span></span>
@@ -43,7 +43,7 @@ if (!isset($_SESSION['warning3'])) {
 <script src="../javascript/jquery-3.6.0.min.js"></script>
 <script src="../javascript/include/footer.js"></script>
 
-<!-- adminmenucheck -->
+
 <script type="text/javascript">
 <?php if ($role=='administrator'): ?>
 document.getElementById("albumy").style.display="block";
@@ -62,7 +62,7 @@ document.getElementById("users").style.display="none";
 <?php unset($_SESSION['warning3']); ?>
 
 <?php
-// Jeśli brak co -> guziki
+
 if (!$co) {
     echo '<div class="lubdiv2">
             <form method="get" action="index.php">
@@ -74,7 +74,7 @@ if (!$co) {
             </form>
           </div>';
 } else {
-    // Mamy listę userów w $users
+    
     echo '<div id="listazdjec">';
 
     foreach ($users as $u) {
@@ -94,7 +94,7 @@ if (!$co) {
              . '</p>';
 
         if ($role=='administrator') {
-            // Przycisk "Zmień uprawnienia"
+            
             echo '<button id="uprawnieniazmien'.$u['id'].'" onclick="pokaz3('.$u['id'].')">Zmień uprawnienia</button>
                   <form class="zmiana2" method="post" action="index.php?type=users&action=change" style="display:inline;">
                     <div class="funkcje">
@@ -108,7 +108,7 @@ if (!$co) {
                     </div>
                   </form>';
 
-            // blokuj / odblokuj
+            
             if ($u['aktywny']==1) {
                 echo '<form class="zmiana2" method="post" action="index.php?type=users&action=block" style="display:inline;">
                         <input type="hidden" name="id" value="'.$u['id'].'">
@@ -121,7 +121,7 @@ if (!$co) {
                       </form>';
             }
 
-            // usuń konto
+           
             echo '<form class="zmiana2" method="post" action="index.php?type=users&action=delete" style="display:inline;">
                     <input type="hidden" name="id" value="'.$u['id'].'">
                     <button type="submit" name="usun2" id="usun">Usuń Konto</button>
@@ -133,7 +133,7 @@ if (!$co) {
         echo '</div>';
     }
 
-    // Dodatkowo, jeśli $co=='admin', w starym kodzie dopisywaliśmy osobny bloczek z samym sobą:
+    
     if ($co=='admin') {
         $myLogin = $_SESSION['tablica'][1] ?? '';
         echo '<div class="komlist"><p class="listelement2">Administrator : '.str_repeat("&nbsp;",1).$myLogin.'</p></div>';

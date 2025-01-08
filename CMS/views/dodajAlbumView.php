@@ -9,11 +9,11 @@
 </head>
 <body>
 <div id="container">
-  <!-- Menu -->
+
   <?php include 'javascript/include/menu.php'; ?>
 
   <div id="main">
-    <!-- Formularz -->
+    
     <form method="post" action="dodaj-album.php?action=store">
       <input type="text" required="required" name="albumname" id="albumname"
              placeholder="Wpisz nazwę albumu" onchange="albumnamecheck()"><br>
@@ -21,7 +21,7 @@
 
       <input type="submit" name="dodajalbum" id="dodajalbum" value="Dodaj Album">
 
-      <!-- Wyświetlanie błędów, jeśli są -->
+      
       <?php if (!empty($errors)): ?>
         <div class="error-box">
           <?php foreach ($errors as $err): ?>

@@ -12,18 +12,12 @@ class PhotoService
 
     public function __construct()
     {
-        // W większych projektach wstrzyknięcie przez DI Container
+       
         $this->photoRepository = new PhotoRepository();
         $this->paginationService = new PaginationService();
     }
 
-    /**
-     * Zwraca listę top zdjęć z bazy,
-     * ewentualnie można tutaj dodać logikę filtrowania itp.
-     *
-     * @param int $limit
-     * @return array
-     */
+    
     public function getTopRatedPhotos(int $limit = 20): array
     {
         return $this->photoRepository->findTopRatedPhotos($limit);
@@ -33,18 +27,14 @@ class PhotoService
         return $this->photoRepository->countAcceptedPhotosByAlbum($albumId);
     }
 
-    /**
-     * Pobiera zdjęcia (zaakceptowane) z danego albumu, z uwzględnieniem paginacji.
-     */
+    
     public function getAcceptedPhotosForAlbum(int $albumId, int $page, int $perPage): array
     {
         $offset = $this->paginationService->calculateOffset($page, $perPage);
         return $this->photoRepository->findAcceptedPhotosByAlbum($albumId, $perPage, $offset);
     }
 
-    /**
-     * Liczy liczbę stron (dla zaakceptowanych zdjęć w albumie).
-     */
+    
     public function getNumberOfPagesForAlbum(int $albumId, int $perPage): int
     {
         $total = $this->getAcceptedPhotosCountForAlbum($albumId);
@@ -61,8 +51,7 @@ class PhotoService
 
     public function addRating(int $photoId, int $userId, int $rating): bool
     {
-        // Możemy np. sprawdzić, czy user już oceniał 
-        // (w oryginalnym kodzie nie ma takiego sprawdzenia, ale można dodać)
+        
         return $this->photoRepository->addRating($photoId, $userId, $rating);
     }
 
@@ -91,13 +80,11 @@ class PhotoService
     }
     public function addComment(int $photoId, int $userId, string $comment): bool
     {
-        // (opcjonalnie: walidacja comment length itp.)
+       
         return $this->photoRepository->addComment($photoId, $userId, $comment);
     }
 
-    /**
-     * Pobiera zaakceptowane komentarze do danego zdjęcia.
-     */
+    
     public function findAcceptedCommentsByPhoto(int $photoId): array
     {
         return $this->photoRepository->findAcceptedCommentsByPhoto($photoId);
@@ -126,25 +113,21 @@ class PhotoService
     {
         $this->photoRepository->deleteCommentById($commentId);
     }
-    /**
-     * Zwraca tablicę:
-     *   ['errors' => [...]] w razie błędów
-     *   lub ['photo_id' => X] jeśli się uda zapisać
-     */
+    
     public function createPhoto(
         int $albumId,
-        array $uploadedFile,        // np. $_FILES['photo']
-        string $userPhotoDescription // opis w polu "opis"
+        array $uploadedFile,  
+        string $userPhotoDescription 
     ): array {
         $errors = [];
 
-        // 1. Walidacja pliku
+        
         if ($uploadedFile['error'] !== UPLOAD_ERR_OK) {
             $errors[] = "Błąd przesyłania pliku. Kod: " . $uploadedFile['error'];
             return ['errors' => $errors];
         }
 
-        // Sprawdź, czy to obrazek
+        
         $imageInfo = getimagesize($uploadedFile['tmp_name']);
         if (!$imageInfo) {
             $errors[] = "Przesłany plik nie jest obrazkiem.";
@@ -156,26 +139,25 @@ class PhotoService
             return ['errors' => $errors];
         }
 
-        // 2. Przeniesienie pliku do photo/<albumId>/
+        
         $albumDir = __DIR__ . '/../../photo/' . $albumId;
         if (!file_exists($albumDir)) {
-            // lepiej wczesniej sprawdzić, czy album istnieje, ale tu załóżmy tak
+            
             @mkdir($albumDir, 0777, true);
         }
 
-        $filename = $uploadedFile['name']; // oryginalna nazwa
+        $filename = $uploadedFile['name']; 
         $targetPath = $albumDir . '/' . $filename;
         if (!move_uploaded_file($uploadedFile['tmp_name'], $targetPath)) {
             $errors[] = "Nie udało się zapisać pliku na serwerze.";
             return ['errors' => $errors];
         }
 
-        // 3. (opcjonalnie) generowanie miniaturki w photo/<albumId>/min/
-        // ...tworzenie minatury...
-        $this->generateThumbnail($albumId, $imageInfo, $targetPath);  // np. oddzielna metoda
+       
+        
+        $this->generateThumbnail($albumId, $imageInfo, $targetPath);
 
-        // 4. Zapis do bazy
-        // wstawiamy rekord do zdjecia: opis = nazwa pliku, opiszdjecia = userPhotoDescription
+        
         $photoId = $this->photoRepository->createPhoto(
             $albumId,
             $filename,
@@ -191,17 +173,17 @@ class PhotoService
 
     private function generateThumbnail(int $albumId, array $imageInfo, string $sourcePath): void
     {
-        // Przykład uproszczony
+        
         $albumDir = __DIR__ . '/../../photo/' . $albumId;
         $thumbDir = $albumDir . '/min';
         if (!file_exists($thumbDir)) {
             @mkdir($thumbDir, 0777, true);
         }
 
-        list($width, $height) = $imageInfo; // getimagesize
+        list($width, $height) = $imageInfo;
         $imageType = $imageInfo[2];
 
-        // Tworzymy np. 180 px height miniaturkę
+        
         $newHeight = 180;
         $newWidth  = intval($width * (180 / $height));
         $thumb = imagecreatetruecolor($newWidth, $newHeight);
@@ -219,8 +201,7 @@ class PhotoService
         }
 
         imagecopyresampled($thumb, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
-        // Zapis do pliku: np. "photo/<albumId>/min/<photoId>-min.jpg"
-        // Ale my nie znamy $photoId jeszcze. Możemy po prostu nazwać "<filename>-min.jpg"
+
         $thumbPath = $thumbDir . '/' . basename($sourcePath) . '-min.jpg';
         imagejpeg($thumb, $thumbPath);
 
@@ -235,13 +216,13 @@ class PhotoService
     {
         $errors = [];
 
-        // Walidacja opisu
+
         if (strlen($newDescription) > 255) {
             $errors[] = "opis zdjęcia nie może przekraczać 255 znaków";
             return ['errors' => $errors];
         }
 
-        // Aktualizacja opisu w bazie danych
+
         $success = $this->photoRepository->updatePhotoDescription($newDescription, $photoId);
         if (!$success) {
             $errors[] = "Nie udało się zaktualizować opisu zdjęcia.";
@@ -254,7 +235,7 @@ class PhotoService
     {
         $errors = [];
 
-        // Usunięcie zdjęcia
+
         $success = $this->photoRepository->deletePhoto($photoId);
         if (!$success) {
             $errors[] = "Nie udało się usunąć zdjęcia.";
@@ -300,7 +281,7 @@ class PhotoService
 
     public function deletePhotoCompletely(int $photoId, int $albumId, string $filename): void
     {
-        // usuwa komentarze, oceny, rekord zdjęcia i plik
+   
         $this->photoRepository->deletePhotoWithRelations($photoId, $albumId, $filename);
     }
     

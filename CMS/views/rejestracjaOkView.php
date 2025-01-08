@@ -10,7 +10,7 @@
 <body>
 <div id="container">
   <?php
-  // Wczytanie menu:
+  
   include 'javascript/include/menu.php';
   ?>
   <p id="sukces">Brawo, udało ci się poprawnie zarejestrować!</p><br>

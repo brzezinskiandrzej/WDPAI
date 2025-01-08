@@ -7,10 +7,7 @@ use App\Services\UserService;
 
 session_start();
 
-/**
- * Kontroler sekcji "Użytkownicy" w panelu admina.
- * Zastępuje starą część adminscript.php => if(type=='users') ...
- */
+
 class AdminUserController
 {
     private UserService $userService;
@@ -24,33 +21,28 @@ class AdminUserController
         $this->userService = new UserService($userRepo);
     }
 
-    /**
-     * Główna metoda do wyświetlania użytkowników
-     * bazuje na ?type=users&co=... (zwykly/mod/admin/wszystko)
-     */
+  
     public function showUsers()
     {
         $co = $_GET['co'] ?? null;
 
-        // Jeśli brak 'co', w starym kodzie wyświetlaliśmy guziki do wyboru grup:
+        
         if (!$co) {
-            // Tylko wyświetlamy widok z guzikami (bez listy)
-            $users = []; // brak listy
+            
+            $users = [];
             require __DIR__ . '/../views/adminUsersView.php';
             return;
         }
 
-        // Gdy jest 'co', pobieramy dane z serwisu:
-        $myId = $_SESSION['tablica'][7] ?? null; // id aktualnie zalogowanego
+       
+        $myId = $_SESSION['tablica'][7] ?? null; 
         $users = $this->userService->getUsersByCo($co, $myId);
 
-        // Teraz wyświetlamy widok z listą $users
+    
         require __DIR__ . '/../views/adminUsersView.php';
     }
 
-    /**
-     * Blokowanie użytkownika (action=block)
-     */
+   
     public function blockUser()
     {
         if (!isset($_POST['id'])) {
@@ -66,9 +58,7 @@ class AdminUserController
         exit;
     }
 
-    /**
-     * Odblokowanie użytkownika (action=unblock)
-     */
+    
     public function unblockUser()
     {
         if (!isset($_POST['id'])) {
@@ -84,9 +74,7 @@ class AdminUserController
         exit;
     }
 
-    /**
-     * Usuwanie użytkownika (action=delete)
-     */
+    
     public function deleteUser()
     {
         if (!isset($_POST['id'])) {
@@ -102,9 +90,7 @@ class AdminUserController
         exit;
     }
 
-    /**
-     * Zmiana uprawnień użytkownika (action=change)
-     */
+    
     public function changeUserPermission()
     {
         if (!isset($_POST['id']) || !isset($_POST['wybor'])) {

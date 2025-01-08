@@ -2,13 +2,14 @@
     position:relative;
     padding-bottom:50px; 
 }
-/* Paginacja */
+
 .pagination {
     display: flex;
     list-style: none;
     padding-left: 0;
-    justify-content: center; /* Wyśrodkuj paginację */
-    margin-top: 20px; /* Odstęp od treści */
+    justify-content: center; 
+    margin-top: 20px; 
+    background: none;
 }
 
 .pagination li {
@@ -19,7 +20,7 @@
     display: block;
     padding: 8px 12px;
     text-decoration: none;
-    color: #007bff;
+    color: black;
     border: 1px solid #dee2e6;
     border-radius: 4px;
     transition: background-color 0.3s, color 0.3s;
@@ -30,9 +31,8 @@
 }
 
 .pagination .active .page-link {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
+    background-color: bisque;
+    color: black;
     cursor: default;
 }
 
@@ -50,3 +50,4 @@
         font-size: 14px;
     }
 }
+
