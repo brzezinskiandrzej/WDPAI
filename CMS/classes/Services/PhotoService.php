@@ -54,6 +54,10 @@ class PhotoService
         
         return $this->photoRepository->addRating($photoId, $userId, $rating);
     }
+    public function getUserRating(int $photoId, int $userId): ?int
+    {
+        return $this->photoRepository->getUserRating($photoId, $userId);
+    }
 
     public function getAverageRatingAndCount(int $photoId): array
     {

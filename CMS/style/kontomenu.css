@@ -155,7 +155,7 @@ a:hover{
     margin:auto;
     text-align: center;
     width:calc(100% - 300px);
-    background:radial-gradient( #9198e5 1%,white 50%); 
+    background:radial-gradient( #9198e5 1%,transparent 50%); 
 }
 .cwarning{
     font-size: 15px;

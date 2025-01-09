@@ -1,0 +1,62 @@
+<?php
+namespace App\Services;
+
+use App\Repositories\TagRepository;
+use App\Repositories\PhotoTagRepository;
+
+class TagService
+{
+    private TagRepository $tagRepo;
+    private PhotoTagRepository $photoTagRepo;
+
+    public function __construct(TagRepository $tagRepo, PhotoTagRepository $photoTagRepo)
+    {
+        $this->tagRepo = $tagRepo;
+        $this->photoTagRepo = $photoTagRepo;
+    }
+
+    public function addTagToPhoto(int $photoId, string $tagName): void
+    {
+        
+        $tag = $this->tagRepo->getTagByName($tagName);
+        if (!$tag) {
+           
+            $tagId = $this->tagRepo->createTag($tagName);
+        } else {
+            $tagId = (int)$tag['id'];
+        }
+
+        
+        $this->photoTagRepo->addTagToPhoto($photoId, $tagId);
+    }
+
+   
+    public function removeTagFromPhoto(int $photoId, string $tagName): void
+    {
+        $tag = $this->tagRepo->getTagByName($tagName);
+        if ($tag) {
+            $tagId = (int)$tag['id'];
+            $this->photoTagRepo->removeTagFromPhoto($photoId, $tagId);
+        } else {
+            throw new \Exception("Tag '$tagName' nie istnieje.");
+        }
+    }
+
+   
+    public function updateTag(int $tagId, string $nowaNazwa): void
+    {
+        $this->tagRepo->updateTag($tagId, $nowaNazwa);
+    }
+
+   
+    public function deleteTag(int $tagId): void
+    {
+        $this->tagRepo->deleteTag($tagId);
+    }
+
+    public function getTagsForPhoto(int $photoId): array
+    {
+        return $this->photoTagRepo->getTagsForPhoto($photoId);
+    }
+}
+?>

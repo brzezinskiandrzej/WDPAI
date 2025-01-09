@@ -87,7 +87,7 @@ class UserRepository
     
     public function updatePassword(int $userId, string $newPassword): bool
     {
-        $sql = "UPDATE uzytkownicy SET password = $1 WHERE id = $2";
+        $sql = "UPDATE uzytkownicy SET haslo = $1 WHERE id = $2";
         $result = pg_query_params($this->conn, $sql, [$newPassword, $userId]);
 
         return $result !== false;

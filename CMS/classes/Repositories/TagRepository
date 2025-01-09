@@ -1,0 +1,77 @@
+<?php
+namespace App\Repositories;
+use App\Database\DatabaseConnection;
+class TagRepository
+{
+    private $conn;
+
+    public function __construct()
+    {
+        
+        $this->conn = DatabaseConnection::getInstance()->getConnection();
+    }
+
+    public function createTag(string $nazwa): int
+    {
+        $sql = "INSERT INTO tagi (nazwa) VALUES ($1) RETURNING id";
+        $result = pg_query_params($this->conn, $sql, [$nazwa]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas tworzenia tagu: " . pg_last_error($this->conn));
+        }
+
+        $row = pg_fetch_assoc($result);
+        return (int)$row['id'];
+    }
+
+   
+    public function getTagByName(string $nazwa): ?array
+    {
+        $sql = "SELECT * FROM tagi WHERE nazwa = $1";
+        $result = pg_query_params($this->conn, $sql, [$nazwa]);
+
+        if (!$result) {
+            throw new \Exception("Błąd zapytania SQL: " . pg_last_error($this->conn));
+        }
+
+        $row = pg_fetch_assoc($result);
+        return $row ?: null;
+    }
+
+    
+    public function getTagById(int $tagId): ?array
+    {
+        $sql = "SELECT * FROM tagi WHERE id = $1";
+        $result = pg_query_params($this->conn, $sql, [$tagId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd zapytania SQL: " . pg_last_error($this->conn));
+        }
+
+        $row = pg_fetch_assoc($result);
+        return $row ?: null;
+    }
+
+    
+    public function updateTag(int $tagId, string $nowaNazwa): void
+    {
+        $sql = "UPDATE tagi SET nazwa = $1 WHERE id = $2";
+        $result = pg_query_params($this->conn, $sql, [$nowaNazwa, $tagId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas aktualizacji tagu: " . pg_last_error($this->conn));
+        }
+    }
+
+    
+    public function deleteTag(int $tagId): void
+    {
+        $sql = "DELETE FROM tagi WHERE id = $1";
+        $result = pg_query_params($this->conn, $sql, [$tagId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas usuwania tagu: " . pg_last_error($this->conn));
+        }
+    }
+}
+?>

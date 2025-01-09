@@ -84,7 +84,7 @@
                         <button id="zmien" onclick="isclicked()">Zmień Dane</button>
                     </div>
                     <div id="podajhaslo" style="display:none;">
-                        <form method="post" action="kontohaslo.php">
+                        <form method="post" action="konto.php?type=dane&action=checkPassword">
                             <p>Aby zmienić adres e-mail bądź hasło najpierw podaj swoje hasło:</p>
                             <input type="password" name="checkpasswd" id="checkpasswd" required="required" placeholder="Wpisz Hasło">
                             <input type="submit" name="checksubmit" id="checksubmit" value="Sprawdź hasło">

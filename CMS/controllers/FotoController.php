@@ -54,7 +54,12 @@ class FotoController
 
         
         $comments = $this->photoService->findAcceptedCommentsByPhoto($photoId);
-
+        $userRating = null;
+    if (!empty($_SESSION['zalogowany']) && $_SESSION['zalogowany'] === true) {
+        $userId = $_SESSION['tablica'][7];
+        $userRating = $this->photoService->getUserRating($photoId, $userId); 
+        
+    }
         
         $title = "Foto #$photoId";
         require __DIR__ . '/../views/fotoView.php';
@@ -79,9 +84,15 @@ class FotoController
             header("Location: foto.php?id=$photoId&id_albumu=$albumId");
             exit;
         }
-
-        $this->photoService->addRating($photoId, $userId, $rating);
-        header("Location: foto.php?id=$photoId&id_albumu=$albumId");
+        try{
+            $this->photoService->addRating($photoId, $userId, $rating);
+            $_SESSION['warning3'] = 'Twoja ocena została zapisana.';
+            header("Location: foto.php?id=$photoId&id_albumu=$albumId");
+        }catch (\Exception $e) {
+            $_SESSION['warning3'] = "Wystąpił błąd: " . htmlspecialchars($e->getMessage());
+            header("Location: foto.php?id=$photoId&id_albumu=$albumId");
+        }
+        
     }
 
     
@@ -101,7 +112,7 @@ class FotoController
     $comment  = trim($_POST['kom'] ?? '');
     $userId   = $_SESSION['tablica'][7]; 
 
-    /
+    
     if ($photoId > 0 && !empty($comment)) {
         $ok = $this->photoService->addComment($photoId, $userId, $comment);
         if ($ok) {

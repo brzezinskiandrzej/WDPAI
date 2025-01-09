@@ -147,9 +147,31 @@ class PhotoRepository
         $sql = <<<SQL
             INSERT INTO zdjecia_oceny (id_zdjecia, id_uzytkownika, ocena)
             VALUES ($1, $2, $3)
+            ON CONFLICT (id_zdjecia, id_uzytkownika)
+            DO UPDATE SET ocena = EXCLUDED.ocena;
         SQL;
         $res = pg_query_params($this->conn, $sql, [$photoId, $userId, $rating]);
+        if (!$res) {
+            throw new \Exception("Błąd podczas oceniania zdjęcia: " . pg_last_error($this->conn));
+        }
         return (bool) $res;
+    }
+    public function getUserRating(int $photoId, int $userId): ?int
+    {
+        $sql = <<<SQL
+        SELECT ocena FROM zdjecia_oceny WHERE id_zdjecia = $1 AND id_uzytkownika = $2
+        SQL;
+        $result = pg_query_params($this->conn, $sql, [$photoId, $userId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas pobierania oceny: " . pg_last_error($this->conn));
+        }
+
+        if ($row = pg_fetch_assoc($result)) {
+            return (int)$row['ocena'];
+        }
+
+        return null;
     }
 
     public function findRatingsByPhoto(int $photoId): array

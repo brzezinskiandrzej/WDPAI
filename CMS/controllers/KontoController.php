@@ -28,6 +28,8 @@ class KontoController
                     $this->updateEmail();
                 } elseif ($action === 'updatePassword') {
                     $this->updatePassword();
+                } elseif($action === 'checkPassword'){
+                    $this->checkPasswordAction();
                 } else {
                     $this->showDane();
                 }
@@ -103,6 +105,31 @@ class KontoController
             'warning2' => $warning2,
         ]);
     }
+    public function checkPasswordAction()
+    {
+        session_start();
+
+       
+        if (empty($_SESSION['zalogowany']) || $_SESSION['zalogowany'] !== true) {
+            header('Location: logrej.php');
+            exit;
+        }
+
+        
+        $providedPassword = $_POST['checkpasswd'] ?? '';
+
+        
+        $hashedPasswordInSession = $_SESSION['tablica'][2] ?? '';
+
+        
+        if (md5($providedPassword) === $hashedPasswordInSession) {
+            $_SESSION['passwordConfirmed'] = true;
+            header('Location: konto.php?haslo=ok');
+        } else {
+            header('Location: konto.php?haslo=nieok');
+        }
+    }
+
 
     
     private function updateEmail()
@@ -131,12 +158,16 @@ class KontoController
         if (!$this->isLoggedIn()) {
             $this->redirectToLogin();
         }
-
+        if (empty($_SESSION['passwordConfirmed']) || $_SESSION['passwordConfirmed'] !== true) {
+            
+            $_SESSION['warning2'] = "Najpierw podaj swoje hasło w formularzu weryfikującym dostępu.";
+            header('Location: konto.php?type=dane'); 
+            exit;
+        }
         $userId = $_SESSION['tablica'][7];
-        $currentPassword = $_POST['chaslo'] ?? '';
-        $newPassword = $_POST['checkpasswd'] ?? '';
+        $newPassword = $_POST['chaslo'] ?? '';
 
-        $result = $this->userService->updatePassword($userId, $currentPassword, $newPassword);
+        $result = $this->userService->updatePassword($userId, $newPassword);
 
         if (isset($result['errors'])) {
             $_SESSION['warning2'] = implode('<br>', $result['errors']);

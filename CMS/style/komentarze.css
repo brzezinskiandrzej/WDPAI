@@ -1,5 +1,5 @@
 #komentarze{
-    width:calc(100% - 500px);
+    width:calc(100% - 50vmin);
     margin:auto;
     list-style-image: url("account.png");
     display:block;

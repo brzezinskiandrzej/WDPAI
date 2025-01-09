@@ -1,0 +1,72 @@
+<?php
+namespace App\Repositories;
+
+use App\Database\DatabaseConnection;
+
+
+
+class ProfileRepository
+{
+    private $conn;
+
+    public function __construct()
+    {
+        $this->conn = DatabaseConnection::getInstance()->getConnection();
+    }
+
+    
+    public function create(int $userId, ?string $bio, ?string $avatarUrl): void
+    {
+        $sql = "INSERT INTO profile (id, bio, avatar_url) VALUES ($1, $2, $3)";
+        $result = pg_query_params($this->conn, $sql, [
+            $userId,
+            $bio,
+            $avatarUrl
+        ]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas tworzenia profilu: " . pg_last_error($this->conn));
+        }
+    }
+
+    
+    public function getProfileByUserId(int $userId): ?array
+    {
+        $sql = "SELECT * FROM profile WHERE id = $1";
+        $result = pg_query_params($this->conn, $sql, [$userId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd zapytania SQL: " . pg_last_error($this->conn));
+        }
+
+        $row = pg_fetch_assoc($result);
+        return $row ?: null;
+    }
+
+    
+    public function updateProfile(int $userId, ?string $bio, ?string $avatarUrl): void
+    {
+        $sql = "UPDATE profile SET bio = $1, avatar_url = $2 WHERE id = $3";
+        $result = pg_query_params($this->conn, $sql, [
+            $bio,
+            $avatarUrl,
+            $userId
+        ]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas aktualizacji profilu: " . pg_last_error($this->conn));
+        }
+    }
+
+    
+    public function deleteProfile(int $userId): void
+    {
+        $sql = "DELETE FROM profile WHERE id = $1";
+        $result = pg_query_params($this->conn, $sql, [$userId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas usuwania profilu: " . pg_last_error($this->conn));
+        }
+    }
+}
+?>

@@ -132,15 +132,12 @@ class UserService
     }
 
     
-    public function updatePassword(int $userId, string $currentPassword, string $newPassword): array
+    public function updatePassword(int $userId, string $newPassword): array
     {
         $errors = [];
 
         
-        if (md5($currentPassword) != $_SESSION['tablica'][2]) {
-            $errors[] = "Niepoprawne obecne hasło.";
-            return ['errors' => $errors];
-        }
+        
 
         
         $passwordValidation = $this->validatePassword($newPassword);

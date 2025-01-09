@@ -183,7 +183,7 @@ class AlbumRepository
     public function deleteAlbumCompletely(int $albumId): void
     {
         
-        pg_query($this->conn, "BEGIN");
+        pg_query($this->conn, "BEGIN TRANSACTION ISOLATION LEVEL SERIALIZABLE");
 
 
         $sql2 = "

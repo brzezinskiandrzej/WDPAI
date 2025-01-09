@@ -65,16 +65,16 @@
       
       <form method="post" action="foto.php?action=ratePhoto">
         <div class="rating" id="ratings">
-          <input type="radio" name="star" id="star1" value="10" onchange="this.form.submit();"><label for="star1"></label>
-          <input type="radio" name="star" id="star2" value="9" onchange="this.form.submit();"><label for="star2"></label>
-          <input type="radio" name="star" id="star3" value="8" onchange="this.form.submit();"><label for="star3"></label>
-          <input type="radio" name="star" id="star4" value="7" onchange="this.form.submit();"><label for="star4"></label>
-          <input type="radio" name="star" id="star5" value="6" onchange="this.form.submit();"><label for="star5"></label>
-          <input type="radio" name="star" id="star6" value="5" onchange="this.form.submit();"><label for="star6"></label>
-          <input type="radio" name="star" id="star7" value="4" onchange="this.form.submit();"><label for="star7"></label>
-          <input type="radio" name="star" id="star8" value="3" onchange="this.form.submit();"><label for="star8"></label>
-          <input type="radio" name="star" id="star9" value="2" onchange="this.form.submit();"><label for="star9"></label>
-          <input type="radio" name="star" id="star10" value="1" onchange="this.form.submit();"><label for="star10"></label>
+          <input type="radio" name="star" id="star1" value="10"<?php if ($userRating === 10) echo 'checked'; ?> onchange="this.form.submit();"><label for="star1"></label>
+          <input type="radio" name="star" id="star2" value="9" <?php if ($userRating === 9) echo 'checked'; ?> onchange="this.form.submit();"><label for="star2"></label>
+          <input type="radio" name="star" id="star3" value="8" <?php if ($userRating === 8) echo 'checked'; ?> onchange="this.form.submit();"><label for="star3"></label>
+          <input type="radio" name="star" id="star4" value="7" <?php if ($userRating === 7) echo 'checked'; ?> onchange="this.form.submit();"><label for="star4"></label>
+          <input type="radio" name="star" id="star5" value="6" <?php if ($userRating === 6) echo 'checked'; ?> onchange="this.form.submit();"><label for="star5"></label>
+          <input type="radio" name="star" id="star6" value="5" <?php if ($userRating === 5) echo 'checked'; ?> onchange="this.form.submit();"><label for="star6"></label>
+          <input type="radio" name="star" id="star7" value="4" <?php if ($userRating === 4) echo 'checked'; ?> onchange="this.form.submit();"><label for="star7"></label>
+          <input type="radio" name="star" id="star8" value="3" <?php if ($userRating === 3) echo 'checked'; ?> onchange="this.form.submit();"><label for="star8"></label>
+          <input type="radio" name="star" id="star9" value="2" <?php if ($userRating === 2) echo 'checked'; ?> onchange="this.form.submit();"><label for="star9"></label>
+          <input type="radio" name="star" id="star10" value="1" <?php if ($userRating === 1) echo 'checked'; ?> onchange="this.form.submit();"><label for="star10"></label>
         </div>
         <input type="hidden" name="id" value="<?= $photo['id'] ?>">
         <input type="hidden" name="idalbm" value="<?= $photo['album_id'] ?>">

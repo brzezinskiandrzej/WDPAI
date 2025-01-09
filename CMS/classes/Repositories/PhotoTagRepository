@@ -1,0 +1,63 @@
+<?php
+namespace App\Repositories;
+
+use App\Database\DatabaseConnection;
+class PhotoTagRepository
+{
+    private $conn;
+
+    public function __construct()
+    {
+        
+        $this->conn = DatabaseConnection::getInstance()->getConnection();
+    }
+
+    
+    public function addTagToPhoto(int $photoId, int $tagId): void
+    {
+        $sql = "INSERT INTO zdjecia_tag (zdjecia_id, tagi_id) VALUES ($1, $2) ON CONFLICT DO NOTHING";
+        $result = pg_query_params($this->conn, $sql, [$photoId, $tagId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas dodawania tagu do zdjęcia: " . pg_last_error($this->conn));
+        }
+    }
+
+    
+    public function removeTagFromPhoto(int $photoId, int $tagId): void
+    {
+        $sql = "DELETE FROM zdjecia_tag WHERE zdjecia_id = $1 AND tagi_id = $2";
+        $result = pg_query_params($this->conn, $sql, [$photoId, $tagId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas usuwania tagu ze zdjęcia: " . pg_last_error($this->conn));
+        }
+    }
+
+    
+    public function getTagsForPhoto(int $photoId): array
+    {
+        $sql = "
+            SELECT t.id, t.nazwa
+            FROM tagi t
+            INNER JOIN zdjecia_tag zt ON t.id = zt.tagi_id
+            WHERE zt.zdjecia_id = $1
+        ";
+        $result = pg_query_params($this->conn, $sql, [$photoId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas pobierania tagów dla zdjęcia: " . pg_last_error($this->conn));
+        }
+
+        $tags = [];
+        while ($row = pg_fetch_assoc($result)) {
+            $tags[] = [
+                'id' => (int)$row['id'],
+                'nazwa' => $row['nazwa']
+            ];
+        }
+
+        return $tags;
+    }
+}
+?>

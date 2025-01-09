@@ -1,0 +1,49 @@
+<?php
+namespace App\Services;
+
+use App\Repositories\ProfileRepository;
+
+
+class ProfileService
+{
+    private ProfileRepository $profileRepo;
+
+    public function __construct(ProfileRepository $profileRepo)
+    {
+        $this->profileRepo = $profileRepo;
+    }
+
+    public function createProfile(int $userId, ?string $bio = null, ?string $avatarUrl = null): void
+    {
+        
+        if ($userId <= 0) {
+            throw new \InvalidArgumentException("ID użytkownika musi być dodatnie.");
+        }
+
+        $this->profileRepo->createProfile($userId, $bio, $avatarUrl);
+    }
+
+   
+    public function getProfileByUserId(int $userId): ?array
+    {
+        return $this->profileRepo->getProfileByUserId($userId);
+    }
+
+    
+    public function updateProfile(int $userId, ?string $bio = null, ?string $avatarUrl = null): void
+    {
+        
+        if ($userId <= 0) {
+            throw new \InvalidArgumentException("ID użytkownika musi być dodatnie.");
+        }
+
+        $this->profileRepo->updateProfile($userId, $bio, $avatarUrl);
+    }
+
+    
+    public function deleteProfile(int $userId): void
+    {
+        $this->profileRepo->deleteProfile($userId);
+    }
+}
+?>
