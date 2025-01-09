@@ -89,10 +89,10 @@ switch ($type) {
             $action = $_GET['action'] ?? null;
             switch ($action) {
                 case 'block':
-                    $userController->blockUser();
+                    $userController->blockUser(htmlspecialchars($_POST['id']));
                     break;
                 case 'unblock':
-                    $userController->unblockUser();
+                    $userController->unblockUser(htmlspecialchars($_POST['id']));
                     break;
                 case 'delete':
                     $userController->deleteUser();

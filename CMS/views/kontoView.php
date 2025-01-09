@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style/footerelement.css"/>
     <link rel="stylesheet" type="text/css" href="style/kontomenu.css"/>
     <link rel="stylesheet" type="text/css" href="style/albumykonto.css"/>
+
     <title>Konto Użytkownika</title>
     
     <script src="javascript/include/kontojs.js"></script>
@@ -137,6 +138,11 @@
                                     <span class="tooltiptext">
                                         <input type="text" name="nowytytul" class="ntytul" id="ntytul<?= htmlspecialchars($album['id']) ?>" style="display:none;" required="required" placeholder="Nowy tytuł">
                                         <input type="submit" name="zmien" class="zmien" id="zmien<?= htmlspecialchars($album['id']) ?>" value="Zmień Tytuł" style="display:none;">
+                                    </span>
+                                </form>
+                                <form class="zmiana" method="post" action="konto.php?type=albumy&action=delete">
+                                    <input type="hidden" name="id" value="<?= htmlspecialchars($album['id']) ?>">
+                                    <span class="tooltiptext" id="usunzdj<?= htmlspecialchars($album['id']) ?>">
                                         <input type="submit" name="usun2" id="usun" value="Usuń Album">
                                     </span>
                                 </form>
@@ -170,6 +176,14 @@
                                         <span class="tooltiptext">
                                             <input type="text" name="nowyopis" class="ntytul" id="ntytul<?= htmlspecialchars($photo['id']) ?>" style="display:none;" required="required" placeholder="Nowy opis">
                                             <input type="submit" name="zmien" class="zmien" id="zmien<?= htmlspecialchars($photo['id']) ?>" value="Zmień Opis" style="display:none;">
+                                            
+                                        </span>
+                                    </form>
+                                    <form class="zmiana" method="post" action="konto.php?type=zdjecia&action=delete">
+                                        <input type="hidden" name="id" value="<?= htmlspecialchars($photo['id']) ?>">
+                                        <input type="hidden" name="idalbumu" value="<?= htmlspecialchars($selectedAlbumId) ?>">
+                                        <input type="hidden" name="opis" value="<?= htmlspecialchars($photo['opis']) ?>">
+                                        <span class="tooltiptext" id="usunzdj">
                                             <input type="submit" name="usun2" id="usun" value="Usuń Zdjęcie">
                                         </span>
                                     </form>
@@ -183,13 +197,15 @@
                     <?php if ($albums): ?>
                         <div class="tooltip">
                             <p class="atitle">Wybierz album:</p>
-                            <ul>
+                            <ul class="wybierzalbum">
                                 <?php foreach ($albums as $album): ?>
                                     <li>
-                                        <a href="konto.php?type=zdjecia&id=<?= htmlspecialchars($album['id']) ?>">
-                                            <img class="glowne" src="photo/folder.png" height="180" alt="Album <?= htmlspecialchars($album['tytul']) ?>">
-                                            <p class="atitle"><?= htmlspecialchars($album['tytul']) ?></p>
-                                        </a>
+                                        <div class="album-item">
+                                            <a href="konto.php?type=zdjecia&id=<?= htmlspecialchars($album['id']) ?>">
+                                                <img class="glowne" src="photo/folder.png" height="180" alt="Album <?= htmlspecialchars($album['tytul']) ?>">
+                                                <p class="atitle"><?= htmlspecialchars($album['tytul']) ?></p>
+                                            </a>
+                                        </div>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>
@@ -212,6 +228,7 @@
         document.getElementById('ntytul' + numer).style.display = "block";
         document.getElementById("zmien" + numer).style.display = "block";
         document.getElementById("pzmien" + numer).style.display = "none";
+        document.getElementById("usunzdj" + numer).style.marginTop = "40px";
     }
 
     function isclicked() {

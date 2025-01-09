@@ -111,12 +111,12 @@ if (!$co) {
             
             if ($u['aktywny']==1) {
                 echo '<form class="zmiana2" method="post" action="index.php?type=users&action=block" style="display:inline;">
-                        <input type="hidden" name="id" value="'.$u['id'].'">
+                        <input type="hidden" name="id" value="' . htmlspecialchars($u["id"]) . '">
                         <button type="submit" name="blokuj" class="zmien" id="zaakceptuj">Zablokuj</button>
-                      </form>';
+                    </form>';
             } else {
                 echo '<form class="zmiana2" method="post" action="index.php?type=users&action=unblock" style="display:inline;">
-                        <input type="hidden" name="id" value="'.$u['id'].'">
+                        <input type="hidden" name="id" value="' . htmlspecialchars($u["id"]) . '">
                         <button type="submit" name="odblokuj" class="zmien" id="zaakceptuj">Odblokuj</button>
                       </form>';
             }

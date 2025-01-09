@@ -32,11 +32,12 @@
     margin-left: 3px;
     width:100%;
     left:0px;
-    /* Position the tooltip */
+    
     position:absolute;
     display:inline-block;
     z-index: 1;
   }
+  
   .atitle:hover .tooltiptext{
     visibility: visible;
   }
@@ -99,35 +100,60 @@
       margin-right:5px;
       border-radius: 50%;
   }
+  .wybierzalbum{
+    list-style-type: none;
+    background: none;
+    display:flex;
+    gap:20px;
+  }
   @media (max-width: 768px) {
     .tooltip {
-      margin: 10px; /* Zmniejszone odstępy */
-      max-width: 200px; /* Mniejszy maksymalny rozmiar albumu */
+      margin: 10px; 
+      max-width: 200px; 
     }
   
     .tooltip img {
-      width: 100%; /* Wciąż responsywnie dopasowuje się do kontenera */
-      height: auto; /* Zachowuje proporcje */
+      width: 100%; 
+      height: auto; 
     }
   
     .tooltip .tooltiptext {
-      font-size: 12px; /* Mniejszy rozmiar tekstu w dymku */
+      font-size: 12px; 
     }
   }
   
-  /* Dla ekranów poniżej 480px */
+
   @media (max-width: 480px) {
     .tooltip {
-      margin: 5px; /* Jeszcze mniejsze odstępy */
-      max-width: 150px; /* Dostosowany rozmiar albumu */
+      margin: 5px; 
+      max-width: 150px; 
     }
   
     .tooltip img {
-      width: 100%; /* Wciąż zajmuje pełną szerokość */
-      height: auto; /* Proporcje zachowane */
+      width: 100%; 
+      height: auto;
     }
   
     .tooltip .tooltiptext {
-      font-size: 10px; /* Dopasowanie tekstu */
+      font-size: 10px; /
+    }
+  }
+  .album-item {
+    width: 200px;
+    text-align: center;
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #fff;
+  }
+  .album-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  @media (max-width: 600px) {
+    .album-item {
+      width: 60%; 
     }
   }

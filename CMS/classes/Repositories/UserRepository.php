@@ -167,6 +167,37 @@ class UserRepository
         }
         return $users;
     }
+    public function blockUser(int $userId): void
+    {
+        $sql = "UPDATE uzytkownicy SET aktywny = 0 WHERE id = $1";
+        $result = pg_query_params($this->conn, $sql, [$userId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas blokowania użytkownika: " . pg_last_error($this->conn));
+        }
+    }
+    public function unblockUser(int $userId): void
+    {
+        $sql = "UPDATE uzytkownicy SET aktywny = 1 WHERE id = $1";
+        $result = pg_query_params($this->conn, $sql, [$userId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas odblokowywania użytkownika: " . pg_last_error($this->conn));
+        }
+    }
+    public function changeUserPermissions(int $userId, string $newRole): void
+    {
+        $sql = "UPDATE uzytkownicy SET uprawnienia = $1 WHERE id = $2";
+        $result = pg_query_params($this->conn, $sql, [$newRole, $userId]);
+
+        if (!$result) {
+            throw new \Exception("Błąd podczas zmiany uprawnień użytkownika: " . pg_last_error($this->conn));
+        }
+
+        if (pg_affected_rows($result) === 0) {
+            throw new \Exception("Nie znaleziono użytkownika o ID {$userId}.");
+        }
+    }
 
     
 }

@@ -217,5 +217,32 @@ class UserService
                 return [];
         }
     }
+    public function unblockUser(int $userId): void
+    {
+        
+        $this->userRepository->unblockUser($userId);
+    }
+    public function blockUser(int $userId): void
+    {
+        
+        $this->userRepository->blockUser($userId);
+    }
+    public function changeUserPermissions(int $userId, string $newRole): void
+    {
+        $allowedRoles = ['administrator', 'moderator', 'użytkownik'];
+
+        
+        if (!in_array($newRole, $allowedRoles, true)) {
+            throw new \Exception("Nieprawidłowa rola: {$newRole}. Dozwolone role: " . implode(', ', $allowedRoles));
+        }
+
+        
+        $user = $this->userRepository->getUserById($userId);
+        if (!$user) {
+            throw new \Exception("Użytkownik o ID {$userId} nie istnieje.");
+        }
+
+        $this->userRepository->changeUserPermissions($userId, $newRole);
+    }
     
 }

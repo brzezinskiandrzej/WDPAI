@@ -83,7 +83,7 @@ if (!$co) {
                   <input type="hidden" name="textareanumber" value="'.$i.'">';
 
         if ($role=='administrator') {
-            ć
+            
             echo '<input type="text" class="textarea" name="kom'.$i.'" value="'.htmlspecialchars($wynik['komentarz']).'">
                   <input type="submit" name="zmienkomentarz" id="zmienkomentarz" value="Potwierdź Edycje">';
         } elseif ($role=='moderator') {
