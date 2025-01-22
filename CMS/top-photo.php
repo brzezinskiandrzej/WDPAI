@@ -31,7 +31,7 @@ include 'javascript/include/menu.php';
 </div>
 <footer id="footer">
 		
-			<address>Autor: Andrzej Brzeziński 4Tb</address>	
+			<address>Autor: Andrzej Brzeziński</address>	
 		
 	</footer>
 </body>

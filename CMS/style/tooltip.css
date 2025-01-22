@@ -7,9 +7,7 @@
     background-color: #ace1f4;
   }
   
-  /* Każdy tooltip to 20% szerokości ekranu minus gap. 
-     W praktyce ~ 5 kafelków w rzędzie, 
-     jeśli się nie zmieszczą, to i tak "wrap" przeniesie je do nowej linii. */
+  
   .tooltip {
     flex: 0 1 20vw; 
     box-sizing: border-box;
@@ -20,7 +18,7 @@
     padding: 10px;
   }
   
-  /* Obrazek wypełnia "tooltip" */
+  
   .glowne {
     width: 100%;
     height: auto;

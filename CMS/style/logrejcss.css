@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400&display=swap');
 
-/* ---------------- DOTYCHCZASOWE REGUŁY ---------------- */
+
 
 #rejestracja {
-  display: none; /* ukryty formularz rejestracji */
+  display: none; 
 }
 #loguj {
   display: none;
@@ -13,7 +13,7 @@
   color: blue;
 }
 #logowanie {
-  display: block; /* pokazany formularz logowania */
+  display: block; 
 }
 #rejestruj {
   display: block;
@@ -35,7 +35,7 @@ button {
 input {
   border-color: gray;
   margin-top: 15px;
-  width: 400px;  /* domyślna szerokość na większych ekranach */
+  width: 400px;  
   height: 25px;
 }
 .warnings {
@@ -45,7 +45,7 @@ input {
 }
 body {
   height: 100%;
-  background-color: #ace1f4; /* z Twojego kodu, możesz zostawić jak było */
+  background-color: #ace1f4; 
 }
 #submitsignin, #submitlog {
   width: 80px;
@@ -57,27 +57,24 @@ h3 {
   font-family: 'Quicksand';
 }
 
-/* ---------------- ZMIANY W #logowanko ---------------- */
+
 #logowanko {
-  /* Zamiast width: calc(100vh), które ograniczało szerokość do wysokości ekranu, 
-     lepiej użyć np. max-width + auto, by było responsywne. */
-  max-width: 500px;        /* maksymalna szerokość kontenera */
-  width: 90%;              /* węższe ekrany - płynna szerokość */
+  
+  max-width: 500px;       
+  width: 90%;              
   background: radial-gradient(#9198e5 1%, #ace1f4 70%);
-  margin: 20px auto;       /* wyśrodkuj na stronie i dodaj odstęp u góry/dół */
+  margin: 20px auto;      
   text-align: center;
-  padding: 20px;           /* wewnętrzny odstęp, żeby formularze nie „kleiły się” */
-  box-sizing: border-box;  /* by padding nie rozpychał całego boxa */
+  padding: 20px;          
+  box-sizing: border-box; 
 }
 
-/* ---------------- MEDIA QUERY dla węższych ekranów ---------------- */
+
 @media (max-width: 600px) {
-  /* Zmniejsz szerokość inputów z 400px do ~80% */
   input {
     width: 80%;
-    max-width: 400px; /* na wypadek, gdy ekran jest jeszcze szerszy */
+    max-width: 400px;
   }
-  /* Ewentualnie można trochę zmniejszyć padding */
   #logowanko {
     padding: 15px;
   }

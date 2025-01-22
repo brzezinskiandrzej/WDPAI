@@ -34,7 +34,7 @@
                     $dateAdded = $photo['data'];
                 ?>
                 <div class="foto-container">
-                    <a href="foto.php?id=<?= $photoId ?>">
+                    <a href="foto.php?id=<?= $photoId ?>&id_albumu=<?= $albumId ?>">
                         <div class="img-overlay-container">
                             <img src="photo/<?= $albumId ?>/<?= $filename ?>" alt="Najnowsze zdjęcie">
 

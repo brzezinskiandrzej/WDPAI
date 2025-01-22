@@ -38,7 +38,7 @@
                     $rating    = round($photo['ocena'], 2);
                 ?>
                 <div class="foto-container">
-                    <a href="foto.php?id=<?= $photoId ?>">
+                    <a href="foto.php?id=<?= $photoId ?>&id_albumu=<?= $albumId ?>">
                         <div class="img-overlay-container">
                             <img src="photo/<?= $albumId ?>/<?= $file ?>" alt="Top foto #<?= $i ?>" />
                             <div class="overlay">

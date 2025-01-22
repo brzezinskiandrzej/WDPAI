@@ -1,11 +1,8 @@
 <?php
 require_once __DIR__ . '/../../classes/Services/MenuService.php';
-// ^ dostosuj ścieżkę do faktycznego położenia pliku
 
 use App\Classes\Services\MenuService;
 
-// Załóżmy, że mamy w sesji: $_SESSION['zalogowany'] i $_SESSION['tablica'][5] (uprawnienia)
-// Albo w kodzie mamy $isLoggedIn i $role (wyciągnięte z obiektu User itp.)
 $isLoggedIn = isset($_SESSION['zalogowany']) && $_SESSION['zalogowany'] === true;
 $role = isset($_SESSION['tablica'][5]) ? $_SESSION['tablica'][5] : '';
 
@@ -16,9 +13,8 @@ $menuItems = $menuService->getMenuItems($isLoggedIn, $role);
   <a href="index.php" class="link"><p id="title">IMAGE SPACE</p></a>
 </div>
 
-<!-- PRZYCISK HAMBURGERA (dodany) -->
+
 <div class="hamburger" onclick="toggleMenu()">
-  <!-- Ikonka trzech kresek -->
   <span></span>
   <span></span>
   <span></span>

@@ -1,18 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Pacifico&display=swap');
 
-/* Resetowanie marginesów i ogólne box-sizing */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ===================== TELEFONY < 480px ===================== */
+
 @media all and (max-width: 480px) {
 
   body {
     font-size: 16px;
-    /* cokolwiek innego potrzebujesz dla telefonów */
+    
   }
 
   .przerwa {
@@ -34,7 +33,7 @@
     text-align: center;
   }
 
-  /* Hamburger - stylujemy go i pokazujemy na telefonach */
+  
   .hamburger {
     position: absolute;
     right: 20px;
@@ -48,7 +47,7 @@
     z-index: 200;
   }
   
-  /* Kreski hamburgera */
+  
   .hamburger span {
     display: block;
     height: 3px;
@@ -58,7 +57,7 @@
     transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
   }
   
-  /* Ustawienia pozycji transform-origin */
+  
   .hamburger span:first-child {
     transform-origin: 0% 0%;
   }
@@ -67,7 +66,7 @@
     transform-origin: 0% 100%;
   }
   
-  /* Efekt kliknięcia - zmiana na krzyżyk */
+  
   .hamburger.menu-open span:first-child {
     transform: rotate(45deg) translate(0px, 0px);
   }
@@ -77,12 +76,10 @@
   }
   
   .hamburger.menu-open span:nth-last-child(1) {
-    opacity: 0; /* Środkowa kreska znika */
+    opacity: 0; 
   }
   
-  /***********************************************
-   * Menu wysuwane (Twoje obecne style)
-   ***********************************************/
+
   .nav {
     position: fixed;
     top: 0;
@@ -97,7 +94,7 @@
     z-index: 100;
   }
   
-  /* Menu widoczne */
+  
   .nav.menu-open {
     transform: translateX(0);
   }
@@ -122,7 +119,6 @@
   }
 }
 
-/* ===================== TABLETY 481px - 768px ===================== */
 @media all and (min-width: 481px) and (max-width: 859px) {
 
   body {
@@ -145,7 +141,7 @@
     text-align: center;
   }
 
-  /* Hamburger - stylujemy i pokazujemy na tabletach */
+  
   .hamburger {
     position: absolute;
     right: 20px;
@@ -159,7 +155,7 @@
     z-index: 200;
   }
   
-  /* Kreski hamburgera */
+ 
   .hamburger span {
     display: block;
     height: 3px;
@@ -169,7 +165,7 @@
     transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.3s ease;
   }
   
-  /* Ustawienia pozycji transform-origin */
+  
   .hamburger span:first-child {
     transform-origin: 0% 0%;
   }
@@ -178,7 +174,7 @@
     transform-origin: 0% 100%;
   }
   
-  /* Efekt kliknięcia - zmiana na krzyżyk */
+ 
   .hamburger.menu-open span:first-child {
     transform: rotate(45deg) translate(0px, 0px);
   }
@@ -188,12 +184,9 @@
   }
   
   .hamburger.menu-open span:nth-last-child(1) {
-    opacity: 0; /* Środkowa kreska znika */
+    opacity: 0; 
   }
-  
-  /***********************************************
-   * Menu wysuwane (Twoje obecne style)
-   ***********************************************/
+ 
   .nav {
     position: fixed;
     top: 0;
@@ -208,7 +201,7 @@
     z-index: 100;
   }
   
-  /* Menu widoczne */
+
   .nav.menu-open {
     transform: translateX(0);
   }
@@ -236,10 +229,8 @@
   }
 }
 
-/* ===================== MAŁE LAPTOPY 769px - 1279px ===================== */
 @media all and (min-width: 860px) and (max-width: 1279px) {
 
-  /* Wyłączamy hamburgera na szerokich ekranach */
   .hamburger {
     display: none;
   }
@@ -253,18 +244,17 @@
     border-top: 1px solid burlywood;
     border-bottom: 1px solid burlywood;
     z-index: 100;
-    transform: translateX(0); /* upewniamy się, że jest widoczny */
+    transform: translateX(0); 
   }
-  /* Podmenu w li#konto */
+
 .nav li ul {
-    display: none;       /* <-- ukrywamy */
-    position: absolute;  /* zwykle w menu rozwijanym */
+    display: none;       
+    position: absolute;  
     margin: 0;
     padding: 0;
-    background-color: blanchedalmond; /* albo inny kolor */
+    background-color: blanchedalmond; 
     list-style: none;
-    /* jeżeli menu rozjeżdża się, można ustawić np. width: 150px; */
-    z-index: 999;        /* by nie chowało się za inne elementy */
+    z-index: 999;        
   }
   .nav li:hover ul {
     display: block;
@@ -291,16 +281,16 @@
     margin: 0;
     padding: 0;
     list-style-type: none;
-    font-size: 16px; /* pomniejszamy font */
+    font-size: 16px; 
     height: 35px;
     display: inline-block;
   }
 
-  /* Zmniejszamy szerokość li, by zmieściły się w jednej linii */
+  
   ol > li {
     float: left;
     line-height: 100%;
-    width: 120px; /* było 150px, teraz mniej */
+    width: 120px;
     height: 40px;
     border-right: 1px dashed rosybrown;
   }
@@ -333,8 +323,7 @@
   }
 }
 
-/* ===================== DUŻE EKRANY 1280px+ ===================== */
-/* Tu wstawiamy Twój dotychczasowy kod (przepisany z min-width:1210px na min-width:1280px). */
+
 @media all and (min-width: 1280px) {
 
   .nav {
@@ -347,14 +336,13 @@
     z-index: 100;
   }
   .nav li ul {
-    display: none;       /* <-- ukrywamy */
-    position: absolute;  /* zwykle w menu rozwijanym */
+    display: none;    
+    position: absolute; 
     margin: 0;
     padding: 0;
-    background-color: blanchedalmond; /* albo inny kolor */
+    background-color: blanchedalmond; 
     list-style: none;
-    /* jeżeli menu rozjeżdża się, można ustawić np. width: 150px; */
-    z-index: 999;        /* by nie chowało się za inne elementy */
+    z-index: 999;       
   }
   .nav li:hover ul {
     display: block;
